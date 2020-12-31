@@ -1,16 +1,22 @@
-import '@babel/polyfill';
 import React, { useEffect } from 'react';
+import { NextPage } from 'next'
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 import axios from "axios";
+import { AppProps, AppContext } from 'next/app';
 
-const Owl = ({ Component, store, pageProps }) => {
+
+const Owl = ({ Component, pageProps }: AppProps) => {
   return (
     // <Provider store={store}>
-      // <Head>
-      //   <title>Owl</title>
-      // </Head>
-      <Component {...pageProps} />
+    <>
+      <Head>
+        <title>Owl</title>
+      </Head>
+      {/* <Latout> */}
+        <Component {...pageProps} />
+      {/* </Latout> */}
+    </>
     // </Provider>
   );
 };
@@ -19,7 +25,7 @@ Owl.propTypes = {
   Component: PropTypes.elementType,
 };
 
-Owl.getInitialProps = async (context) => {
+Owl.getInitialProps = async (context: AppContext) => {
   // const { ctx } = context;
   let pageProps = {};
   // const state = ctx.store.getState();
