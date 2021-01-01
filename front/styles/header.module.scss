@@ -1,0 +1,40 @@
+.wrapper {
+  height: 7.5vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 10%;
+  padding-right: 10%;
+  justify-content: space-between;
+
+  .moveLoginPageButton {
+    color: #326295;
+    background-color: #fff;
+    border: 1px double #326295;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    // width: px;
+    height: 34px;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 2px;
+    transition: 0.3s;
+    outline: none;
+  }
+
+  .moveLoginPageButton:hover {
+    color: #fff;
+    background-color: #326295;
+  }
+
+  .moveLoginPageButton:not(:disabled):not(.disabled) {
+    cursor: pointer;
+  }
+
+  .moveLoginPageButtonText {
+    display: flex;
+  }
+}

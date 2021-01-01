@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import axios from "axios";
 import { AppProps, AppContext } from 'next/app';
 import '../styles.scss'
+import Layout from '../components/Layout';
 
 const Owl = ({ Component, pageProps }: AppProps) => {
   return (
@@ -13,9 +14,9 @@ const Owl = ({ Component, pageProps }: AppProps) => {
       <Head>
         <title>Owl</title>
       </Head>
-      {/* <Latout> */}
+      <Layout {...pageProps}>
         <Component {...pageProps} />
-      {/* </Latout> */}
+      </Layout>
     </>
     // </Provider>
   );
