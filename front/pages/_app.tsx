@@ -4,7 +4,7 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 import axios from "axios";
 import { AppProps, AppContext } from 'next/app';
-
+import '../styles.scss'
 
 const Owl = ({ Component, pageProps }: AppProps) => {
   return (
