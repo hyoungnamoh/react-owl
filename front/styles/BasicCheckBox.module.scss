@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  font-weight: 600;
+  font-size: 14px;
+  color: #3E5569;
+  justify-content: flex-start;
+  align-items: center;
+
+  .checkBox {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    margin-right: 5px;
+  
+    .check {
+      display: flex;
+      width: 10px;
+      height: 10px;
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E");
+    }
+  }
+}
+
