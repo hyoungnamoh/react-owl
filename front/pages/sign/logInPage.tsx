@@ -4,6 +4,13 @@ import BasicCheckBox from '../../components/BasicCheckBox';
 import Buttons from '../../components/Buttons';
 import styles from '../../styles/logInPage.module.scss';
 import { useRouter } from 'next/router'
+import Link from 'next/link';
+
+interface item {
+  image: string,
+  onClick(e: React.MouseEvent): void;
+}
+
 const LogInPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +42,7 @@ const LogInPage = () => {
     // router.push('/sign/logInPage');
   }, []);
 
-  const items = [
+  const items: item[] = [
     {
       image: '/images/login/naver.png',
       onClick: onClickNaverLogIn,
@@ -63,10 +70,12 @@ const LogInPage = () => {
           <input type="email" className={styles.input} placeholder="Email" value={email} onChange={onChangeEmail} />
           <input type="password" className={styles.input} style={{ marginTop: '15px' }} placeholder="Password" value={password} onChange={onChangePassword} />
         </div>
-        <BasicCheckBox />
+        <BasicCheckBox style={{ marginTop: 15 }} />
         <button className={styles.loginButton} >LOGIN</button>
         <div className={styles.snsLogInText}>SNS LOGIN</div>
-        <Buttons items={items} itemStyle={itemStyle} spacing={25} wrapperStyle={{marginTop: 15}} />
+        <Buttons items={items} itemStyle={itemStyle} spacing={25} wrapperStyle={{ marginTop: 15 }} />
+        <div className={styles.forgotPasswordText}>Forgot password?</div>
+        <div className={styles.signUpText}>Don't have account? <Link href='/sign/signUpPage'><a style={{ textDecoration: 'none', color: '#7460ee' }}>Sign Up</a></Link> now</div>
       </div>
     </div>
   )
