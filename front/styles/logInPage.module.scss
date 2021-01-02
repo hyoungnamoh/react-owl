@@ -1,0 +1,50 @@
+.page {
+  background-color: #326295;
+  height: 92.5vh;
+  display: flex;
+  justify-content: center;
+
+  .logInBox {
+    width: 570px;
+    height: 578px;
+    background-color: #fff;
+    margin-top: 10vh;
+    border-radius: 15px;
+    outline: none;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .logInText {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: #343a40;
+    }
+
+    .loginButton {
+      padding: 15px 40px;
+      background: #326295;
+      font-weight: 700;
+      color: white;
+      width: 446px;
+      height: 52px;
+      border: 1px solid transparent;
+      border-radius: 2px;
+    }
+
+    .loginButton:not(:disabled):not(.disabled) {
+      cursor: pointer;
+    }
+
+    .snsLogInText {
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+      font-size: 16px;
+      color: #343a40;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+}
