@@ -14,7 +14,7 @@ AWS.config.update({
     accessKeyId: process.env.S3_ACCESS_KEY_ID,
     secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
 });
-Z
+
 //업로드 설정
 const upload = multer({
     storage: multerS3({ //저장 옵션 서버쪽 디스크에 저장

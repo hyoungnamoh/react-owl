@@ -46,6 +46,7 @@ router.post('/signUp', async (req, res, next) => {
 
 // 로그인 기능
 router.post('/signIn', (req, res, next) => {//(Strategy 명
+  console.log('오!!');
     passport.authenticate('local', (err, user, info) => { //info = done 에 세번째 인자(로직상 에러)
         //서버 에러가 있을 경우
         if(err){
@@ -53,6 +54,7 @@ router.post('/signIn', (req, res, next) => {//(Strategy 명
             next(err);
         }
         //로직상 에러가 있을 경우
+        console.log(info);
         if(info){
             return res.status(401).send(info.reason);
         }

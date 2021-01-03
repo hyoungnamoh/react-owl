@@ -27,14 +27,14 @@ const app = express(prod);
 //     credentials: true,
 //   }));
 // } else {
-  //로깅 관련 middleware
-  app.use(morgan('dev')); //로깅 남겨 줌
+//로깅 관련 middleware
+app.use(morgan('dev')); //로깅 남겨 줌
 
-  //cors 에러 middleware
-  app.use(cors({//cors 오류 잡아줌 도메인이 다른데 요청을 할 경우 서버에서 거절함. 이걸 해결 해 줌
-    origin: true, //요청 주소와 같게
-    credentials: true,
-  }));
+//cors 에러 middleware
+app.use(cors({//cors 오류 잡아줌 도메인이 다른데 요청을 할 경우 서버에서 거절함. 이걸 해결 해 줌
+  origin: true, //요청 주소와 같게
+  credentials: true,
+}));
 // }
 
 //서버 확인
@@ -69,8 +69,8 @@ app.use(passport.session()); //얘는 express session 아래에 넣어줘야함,
 
 
 
-app.use('/api/user', userAPIRouter);
-app.use('/api/sign', signAPIRouter);
+app.use('/v1/user', userAPIRouter);
+app.use('/v1/sign', signAPIRouter);
 
 app.listen(prod ? process.env.PORT : 3603, () => {
   console.log(`server is running on ${process.env.PORT}`);

@@ -7,8 +7,8 @@ import styles from '../styles/Buttons.module.scss';
 interface item {
   image: string,
   onClick?: (e: React.MouseEvent) => void;
-  title: string,
-  subTitle: string,
+  title?: string,
+  subTitle?: string,
 }
 
 interface Props {
@@ -41,8 +41,8 @@ const Buttons: FC<Props> = ({ items, itemStyle, wrapperStyle, spacing }) => {
             e.image ?
               <div className={styles.wrapper} style={wrapperStyle ? wrapperStyle : {}}>
                 <img src={e.image} className={styles.buttonItem} style={getStyle(i)} onClick={e.onClick} />
-                <p className={styles.title}>{e.title}</p>
-                <p className={styles.subTitle} dangerouslySetInnerHTML={{ __html: e.subTitle }} />
+                {e.title && <p className={styles.title}>{e.title}</p>}
+                {e.subTitle && <p className={styles.subTitle} dangerouslySetInnerHTML={{ __html: e.subTitle }} />}
               </div>
               :
               <button className={styles.buttonItem} style={getStyle(i)} onClick={e.onClick}>

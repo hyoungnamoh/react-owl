@@ -5,17 +5,28 @@ import Buttons from '../../components/Buttons';
 import styles from '../../styles/logInPage.module.scss';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
-
+import { useEffect } from 'react';
+import axios from 'axios';
 interface item {
   image: string,
   onClick(e: React.MouseEvent): void;
 }
 
+const globalAny: any = global;
+let Kakao: any;
+if (process.browser) {
+  Kakao = globalAny.window.Kakao;
+}
+
 const LogInPage = () => {
+  // const { Kakao } = global.window as any;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+
+  }, []);
   const onChangeEmail = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   }, [email]);
@@ -27,25 +38,37 @@ const LogInPage = () => {
   const onClickNaverLogIn = React.useCallback((e: React.MouseEvent): void => {
     e.preventDefault();
     alert('네이버 로그인');
-    // router.push('/sign/logInPage');
   }, []);
 
   const onClicKakaoLogIn = React.useCallback((e: React.MouseEvent): void => {
     e.preventDefault();
-    alert('네이버 로그인');
-    // router.push('/sign/logInPage');
+    alert('카카오 로그인');
   }, []);
 
   const onClickGoogleLogIn = React.useCallback((e: React.MouseEvent): void => {
     e.preventDefault();
-    alert('네이버 로그인');
-    // router.push('/sign/logInPage');
+    alert('구글 로그인');
   }, []);
+
+  const loginWithKakao = () => {
+    Kakao.Auth.login({
+      success: function (authObj: any) {
+        axios.post('/v1/sign/signIn', authObj, { withCredentials: true });
+      },
+      fail: function (err: any) {
+        console.log('fail~!', err)
+        alert(JSON.stringify(err))
+      },
+    });
+    // Kakao.Auth.authorize({
+    //   redirectUri: 'https://developers.kakao.com/kakaoLogin.jsp'
+    // });
+  }
 
   const items: item[] = [
     {
       image: '/images/login/naver.png',
-      onClick: onClickNaverLogIn,
+      onClick: loginWithKakao,
     },
     {
       image: '/images/login/kakao.png',

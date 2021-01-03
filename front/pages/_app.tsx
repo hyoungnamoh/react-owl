@@ -13,6 +13,8 @@ const Owl = ({ Component, pageProps }: AppProps) => {
     <>
       <Head>
         <title>Owl</title>
+        <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+        <script>Kakao.init('004942d0dc28bd056f8da4b10e000bce');</script>
       </Head>
       <Layout {...pageProps}>
         <Component {...pageProps} />
