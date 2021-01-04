@@ -6,6 +6,10 @@ import axios from "axios";
 import { AppProps, AppContext } from 'next/app';
 import '../styles.scss'
 import Layout from '../components/Layout';
+import { baseURL } from '../config/config';
+
+//공용으로 사용할 axios base url
+axios.defaults.baseURL = baseURL;
 
 const Owl = ({ Component, pageProps }: AppProps) => {
   return (

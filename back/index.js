@@ -32,7 +32,7 @@ app.use(morgan('dev')); //로깅 남겨 줌
 
 //cors 에러 middleware
 app.use(cors({//cors 오류 잡아줌 도메인이 다른데 요청을 할 경우 서버에서 거절함. 이걸 해결 해 줌
-  origin: true, //요청 주소와 같게
+  origin: true, //요청 주소와 같게       **// server의 url이 아닌, 요청하는 client의 url ??
   credentials: true,
 }));
 // }

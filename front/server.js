@@ -37,6 +37,11 @@ app.prepare().then(() => {
     return handle(req, res);
   });
 
+  // server.get('/diary/:id', (req, res) => {
+  //   res.redirect(`/v1/sign/kakao/${req.headers.authorization}`);
+  //   return app.render(req, res, '/', {id: req.params.id});
+  // });
+
   server.listen(prod ? process.env.PORT : 3642, () => {
     console.log(`next+express running on port ${prod ? process.env.PORT : 3642}`);
   })

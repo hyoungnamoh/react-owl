@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { FC, useState } from 'react';
 import BasicCheckBox from '../../components/BasicCheckBox';
-import Buttons from '../../components/Buttons';
+import LogInButtons from '../../components/LogInButtons';
 import styles from '../../styles/logInPage.module.scss';
 import { useRouter } from 'next/router'
 import Link from 'next/link';
 import { useEffect } from 'react';
 import axios from 'axios';
+import Buttons from '../../components/Buttons';
 interface item {
   image: string,
-  onClick(e: React.MouseEvent): void;
+  onClick?: (e: React.MouseEvent) => void,
+  href?: string,
+  title?: string,
+  subTitle?: string,
 }
 
 const globalAny: any = global;
@@ -53,7 +57,22 @@ const LogInPage = () => {
   const loginWithKakao = () => {
     Kakao.Auth.login({
       success: function (authObj: any) {
-        axios.post('/v1/sign/signIn', authObj, { withCredentials: true });
+        console.log(authObj);
+        fetch('http://localhost:3603/v1/sign/kakao2', {
+          //백엔드에서 원하는 형태의 endpoint로 입력해서 fetch한다. 
+          method: 'GET',
+          headers: {
+            authorization: authObj.access_token,
+            //받아오는 response객체의 access_token을 통해 유저 정보를 authorize한다. 
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => localStorage.setItem('token', res.token)
+            //백엔드에서 요구하는 key 값(token)으로 저장해서 localStorage에 저장한다.
+            //여기서 중요한것은 처음에 console.log(res)해서 들어오는 
+            //access_token 값을 백엔드에 전달해줘서 백엔드에 저장 해두는 
+            //절차가 있으므로 까먹지 말 것! 
+          )
       },
       fail: function (err: any) {
         console.log('fail~!', err)
@@ -72,11 +91,11 @@ const LogInPage = () => {
     },
     {
       image: '/images/login/kakao.png',
-      onClick: onClicKakaoLogIn,
+      href: 'http://localhost:3603/v1/sign/kakao',
     },
     {
       image: '/images/login/google.png',
-      onClick: onClickGoogleLogIn,
+      href: 'http://localhost:3603/v1/sign/kakao',
     },
   ]
 
@@ -96,7 +115,7 @@ const LogInPage = () => {
         <BasicCheckBox style={{ marginTop: 15 }} />
         <button className={styles.loginButton} >LOGIN</button>
         <div className={styles.snsLogInText}>SNS LOGIN</div>
-        <Buttons items={items} itemStyle={itemStyle} spacing={25} wrapperStyle={{ marginTop: 15 }} />
+        <LogInButtons items={items} itemStyle={itemStyle} spacing={25} wrapperStyle={{ marginTop: 15 }} />
         <div className={styles.forgotPasswordText}>Forgot password?</div>
         <div className={styles.signUpText}>Don't have account? <Link href='/sign/signUpPage'><a style={{ textDecoration: 'none', color: '#7460ee' }}>Sign Up</a></Link> now</div>
       </div>

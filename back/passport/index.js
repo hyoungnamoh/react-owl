@@ -4,6 +4,7 @@
 const passport = require('passport');
 const db = require('../models');
 const local = require('./local');
+const kakao = require('./kakao');
 
 module.exports = () => {
   //서버쪽에 [{id: 3, cookie: 'qasdsa'}] 이런 형태로 저장해 둠 여기서 cookie를 프론트로 보내줌, 프론트에서 해당 cookie를 서버로 보내면 cookie와 연결된 id값의 데이터를 찾아 넘겨 줌
@@ -24,6 +25,8 @@ module.exports = () => {
       return done(e);
     }
   });
+
   //로그인 전략 연결
+  kakao();
   local();
 };
