@@ -58,7 +58,7 @@ const LogInPage = () => {
     Kakao.Auth.login({
       success: function (authObj: any) {
         console.log(authObj);
-        fetch('http://localhost:3603/v1/sign/kakao2', {
+        fetch('http://localhost:3603/v1/sign/kakao', {
           //백엔드에서 원하는 형태의 endpoint로 입력해서 fetch한다. 
           method: 'GET',
           headers: {

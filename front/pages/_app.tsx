@@ -7,6 +7,7 @@ import { AppProps, AppContext } from 'next/app';
 import '../styles.scss'
 import Layout from '../components/Layout';
 import { baseURL } from '../config/config';
+import BasicCheckBox from '../components/BasicCheckBox';
 
 //공용으로 사용할 axios base url
 axios.defaults.baseURL = baseURL;
@@ -33,7 +34,10 @@ Owl.propTypes = {
 };
 
 Owl.getInitialProps = async (context: AppContext) => {
-  // const { ctx } = context;
+  const { ctx } = context;
+  if(typeof window !== 'undefined' && ctx.req?.headers.cookie) {
+    axios.defaults.headers.Cookie = ctx.req?.headers.cookie;
+  }
   let pageProps = {};
   // const state = ctx.store.getState();
   // const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
