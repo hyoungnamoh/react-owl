@@ -75,9 +75,6 @@ router.post('/signIn', (req, res, next) => {//(Strategy 명
           },],
           attributes: ['userName', 'id', 'email'],
         });
-        await db.Log.create({
-          logType: 'logIn',
-        });
         return res.json(fullUser);
       } catch (e) {
         next(e);
@@ -89,15 +86,52 @@ router.post('/signIn', (req, res, next) => {//(Strategy 명
 // 카카오 로그인 기능
 router.get("/kakao", passport.authenticate("kakao"));
 
+// 
 router.get('/kakao/callback', (req, res, next) => {
   passport.authenticate('kakao', (err, user, info) => {
-    console.log('passport.authenticate(kakao)실행');
-    // if (!user) { return res.redirect('/'); }
-    req.logIn(user, (err) => {
-      console.log('kakao/callback user : ', user);
-      return res.redirect('/');
+    //서버 에러가 있을 경우
+    if (err) {
+      console.error(err);
+      next(err);
+    }
+    //로직상 에러가 있을 경우
+    if (info) {
+      return res.status(401).send(info.reason);
+    }
+    //에러가 없을 경우
+    return req.login(user, async (loginErr) => {
+      try {//login 중 에러
+        if (loginErr) {
+          return next(loginErr);
+        }
+        const fullUser = await db.User.findOne({
+          where: { id: user.id },
+          include: [{
+            model: db.Diary,
+            as: 'Diaries',
+            attributes: ['id'],
+          }, {
+            model: db.ProfileImage,
+            as: 'ProfileImage',
+            attributes: ['src'],
+          },],
+          attributes: ['userName', 'id', 'email'],
+        });
+        return res.json(fullUser);
+      } catch (e) {
+        next(e);
+      }
     });
-  })(req, res);
+  })(req, res, next);
+
+  // console.log('passport.authenticate(kakao)실행');
+  // if (!user) {
+  //    return res.redirect('/sign/logInPage'); 
+  //   }
+  // req.logIn(user, (err) => {
+  //   console.log('kakao/callback user : ', user);
+  //   return res.json(user);
+  // });
 });
 
 // 로그아웃 기능
