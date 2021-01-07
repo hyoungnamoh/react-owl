@@ -8,14 +8,15 @@ import '../styles.scss'
 import Layout from '../components/Layout';
 import { baseURL } from '../config/config';
 import BasicCheckBox from '../components/BasicCheckBox';
+import { Provider } from 'mobx-react';
+import { userStore } from '../store';
 
 //공용으로 사용할 axios base url
 axios.defaults.baseURL = baseURL;
 
 const Owl = ({ Component, pageProps }: AppProps) => {
   return (
-    // <Provider store={store}>
-    <>
+    <Provider >
       <Head>
         <title>Owl</title>
         <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -24,29 +25,24 @@ const Owl = ({ Component, pageProps }: AppProps) => {
       <Layout {...pageProps}>
         <Component {...pageProps} />
       </Layout>
-    </>
-    // </Provider>
+    </Provider>
   );
 };
 
-Owl.propTypes = {
-  Component: PropTypes.elementType,
-};
 
 Owl.getInitialProps = async (context: AppContext) => {
   const { ctx } = context;
-  if(typeof window !== 'undefined' && ctx.req?.headers.cookie) {
-    axios.defaults.headers.Cookie = ctx.req?.headers.cookie;
-  }
   let pageProps = {};
   // const state = ctx.store.getState();
-  // const cookie = ctx.isServer ? ctx.req.headers.cookie : '';
-  // if (ctx.isServer && cookie) {
-  //   axios.defaults.headers.Cookie = cookie;
+  // if (!state.user.loginUser) {
+  //   ctx.store.dispatch({
+  //     type: LOAD_USER_REQUEST,
+  //     data: 0,
+  //   });
   // }
-  // if (context.Component.getInitialProps) {
-  //   pageProps = await context.Component.getInitialProps(ctx) || {};
-  // }
+  if (context.Component.getInitialProps) {
+    pageProps = await context.Component.getInitialProps(ctx) || {};
+  }
 
   return { pageProps };
 }

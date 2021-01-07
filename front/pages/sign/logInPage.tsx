@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Buttons from '../../components/Buttons';
+import { userStore, User } from '../../store';
 interface item {
   image: string,
   onClick?: (e: React.MouseEvent) => void,
@@ -15,6 +16,16 @@ interface item {
   title?: string,
   subTitle?: string,
 }
+
+const dummyUser: User = {
+  email: 'zzzsh789@naver.com',
+  password: '1234',
+  enabled: true,
+  name: '오형남',
+  profilePic: null,
+  signFrom: 'owl',
+  authOk: true,
+};
 
 const globalAny: any = global;
 let Kakao: any;
@@ -104,6 +115,12 @@ const LogInPage = () => {
     height: 50,
   }
 
+  const onClickLogin = (e: React.MouseEvent) => {
+    e.preventDefault();
+    userStore.logIn(dummyUser);
+    router.push('/home');
+  }
+
   return (
     <div className={styles.page}>
       <div className={styles.logInBox}>
@@ -113,7 +130,7 @@ const LogInPage = () => {
           <input type="password" className={styles.input} style={{ marginTop: '15px' }} placeholder="Password" value={password} onChange={onChangePassword} />
         </div>
         <BasicCheckBox style={{ marginTop: 15 }} />
-        <button className={styles.loginButton} >LOGIN</button>
+        <button className={styles.loginButton} onClick={onClickLogin}>LOGIN</button>
         <div className={styles.snsLogInText}>SNS LOGIN</div>
         <LogInButtons items={items} itemStyle={itemStyle} spacing={25} wrapperStyle={{ marginTop: 15 }} />
         <div className={styles.forgotPasswordText}>Forgot password?</div>
@@ -123,4 +140,18 @@ const LogInPage = () => {
   )
 }
 
+export async function getStaticProps() {
+  return { props: {a: 'a'  } };
+  // // Call an external API endpoint to get posts
+  // const res = await fetch('https://.../posts')
+  // const posts = await res.json()
+
+  // // By returning { props: { posts } }, the Blog component
+  // // will receive `posts` as a prop at build time
+  // return {
+  //   props: {
+  //     posts,
+  //   },
+  // }
+}
 export default LogInPage;
