@@ -25,9 +25,13 @@ const Header = () => {
   const getLogoStyle = (): React.CSSProperties => {
     return userStore.data ? { width: 100, height: 35 } : {};
   }
+
+  const getWrapperStyle = (): React.CSSProperties => {
+    return userStore.data ? { backgroundColor: '#326295' } : {};
+  }
   return useObserver(() => (
     <>
-      <div className={styles.wrapper}>
+      <div className={styles.wrapper} style={getWrapperStyle()}>
         <Link href="/">
           <img src={getLogo()} style={getLogoStyle()} />
         </Link>

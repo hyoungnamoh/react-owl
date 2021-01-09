@@ -43,7 +43,7 @@ const Index: NextPage<Props> = ({ }) => {
     return { display: "flex", alignItems: 'center', flexDirection: 'column', marginRight: 100, marginLeft: 100 };
   }
   return (
-    <div>
+    <div className={styles.wrapper}>
       <div className={styles.section1}>
         <h1 className={styles.section1Text}>OWL</h1>
         <h5 className={styles.section1SubText}>Our Work Leader</h5>
