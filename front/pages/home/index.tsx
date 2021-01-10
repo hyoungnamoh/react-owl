@@ -10,7 +10,6 @@ const Home = () => {
   }
   return useObserver(() =>
     <div className={styles.wrapper} style={getWrappStyle()}>
-      하이 홈
     </div>
   )
 };

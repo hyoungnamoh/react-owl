@@ -23,7 +23,7 @@ const Header = () => {
   }
 
   const getLogoStyle = (): React.CSSProperties => {
-    return userStore.data ? { width: 100, height: 35 } : {};
+    return userStore.data ? { width: 100, height: 35, marginLeft: '10%' } : {};
   }
 
   const getWrapperStyle = (): React.CSSProperties => {
@@ -32,30 +32,31 @@ const Header = () => {
   return useObserver(() => (
     <>
       <div className={styles.wrapper} style={getWrapperStyle()}>
-        <Link href="/">
-          <img src={getLogo()} style={getLogoStyle()} />
-        </Link>
-        <div className={styles.rightButton}>
-          {
-            userStore.data ?
-              <>
-                <button className={styles.profilePicButton} style={{ marginRight: 20 }}>
-                  <img src="/images/profile.png" className={styles.profilePic} />
-                </button>
-                <button className={styles.profilePicButton} style={{ marginRight: 20 }}>
-                  <img src="/images/talk.png" className={styles.talk} />
-                </button>
-                <button className={styles.profilePicButton} onClick={logOut}>
-                  <img src="/images/noti.png" className={styles.noti} />
-                </button>
-              </>
-              :
+        <div className={styles.logoContainer}>
+          <Link href="/">
+            <img src={getLogo()} style={getLogoStyle()} />
+          </Link>
+        </div>
+        {
+          userStore.data ?
+            <div className={styles.rightButtonContainer}>
+              <button className={styles.rightButton}>
+                <img src="/images/profile.png" className={styles.profilePic} />
+              </button>
+              <button className={styles.rightButton}>
+                <img src="/images/talk.png" className={styles.talk} />
+              </button>
+              <button className={styles.rightButton} onClick={logOut}>
+                <img src="/images/noti.png" className={styles.noti} />
+              </button>
+            </div>
+            :
+            <div className={styles.moveLoginPageButtonContainer}>
               <button className={styles.moveLoginPageButton} onClick={moveLoginPage}>
                 <p className={styles.moveLoginPageButtonText}>Login / Register</p>
               </button>
-          }
-
-        </div>
+            </div>
+        }
       </div>
     </>
   ));

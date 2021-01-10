@@ -1,16 +1,30 @@
 .wrapper {
-  height: 7.5vh;
+  width: 100%;
+  height: 8vh;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-left: 10%;
-  padding-right: 3%;
   justify-content: space-between;
+  position: fixed;
+  background-color: white;
+  top: 0;
+  z-index: 9999;
 
-  .rightButton {
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    width: 28%;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .moveLoginPageButtonContainer {
     display: flex;
     justify-content: space-around;
-    width: 10%;
+    align-items: center;
+    width: 11%;
+    height: 100%;
+    margin-right: 8%;
     .moveLoginPageButton {
       color: #326295;
       background-color: #fff;
@@ -19,7 +33,6 @@
       justify-content: center;
       align-items: center;
       display: flex;
-      // width: px;
       height: 34px;
       padding: 0.375rem 0.75rem;
       font-size: 0.875rem;
@@ -41,8 +54,17 @@
     .moveLoginPageButton:not(:disabled):not(.disabled) {
       cursor: pointer;
     }
+  }
 
-    .profilePicButton {
+  .rightButtonContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    // background-color: yellowgreen;
+    width: 10%;
+    height: 100%;
+    margin-right: 3%;
+    .rightButton {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -58,7 +80,6 @@
       .talk {
         width: 30px;
         height: 30px;
-        
       }
       .noti {
         width: 25px;
