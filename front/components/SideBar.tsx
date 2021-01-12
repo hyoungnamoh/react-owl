@@ -20,7 +20,10 @@ const arrowPath =
   "6 8 8 8h585.1L386.9 854c-5.6 4.9-2.2 14 5.2 14h91.5c1.9 0 3.8-0.7 5." +
   "2-2L869 536.2c14.7-12.8 14.7-35.6 0-48.4z";
 
-function expandIcon({ isActive }) {
+interface ExpandIcon {
+  isActive: boolean,
+}
+const expandIcon = (props: ExpandIcon): React.ReactNode => {
   return (
     <i style={{ marginRight: ".5rem" }}>
       <svg
@@ -31,7 +34,7 @@ function expandIcon({ isActive }) {
         style={{
           verticalAlign: "-.125em",
           transition: "transform .2s",
-          transform: `rotate(${isActive ? 90 : 0}deg)`
+          transform: `rotate(${props.isActive ? 90 : 0}deg)`
         }}
       >
         <path d={arrowPath} p-id="5827" />
@@ -40,7 +43,7 @@ function expandIcon({ isActive }) {
   );
 }
 
-function CustomHeader(props) {
+function CustomHeader(props: any) {
   console.log(props);
   return (
     <button
@@ -68,50 +71,78 @@ function CustomHeader(props) {
   );
 }
 const SideBar = () => {
-  const [accordion, setAccordion] = useState(false);
-  const [activeKey, setActiveKey] = useState([]);
+  const [accordion, setAccordion] = useState<boolean>(false);
+  const [activeKey, setActiveKey] = useState<string[]>([]);
 
-  const onChange = (activeKey) => {
-      setActiveKey(activeKey);
+  const onChange = (activeKey: any) => {
+    setActiveKey(activeKey);
   };
-  const getExtra = (...rest) => <CustomHeader custom={rest} />;
+  const getExtra = (...rest: any) => <CustomHeader custom={rest} />;
   const getItems = () => {
     const items = [];
-    for (let i = 0, len = 3; i < len; i++) {
-      const key = i + 1;
-      items.push(
-        <Panel
-          header={`This is panel header ${key}`}
-          key={key}
-          disabled={i === 0}
-          extra={getExtra()}
-        >
+    // for (let i = 0, len = 3; i < len; i++) {
+    //   const key = i + 1;
+    //   items.push(
+    //     <Collapse defaultActiveKey="1">
+    //       <Panel
+    //         header={'My Task'}
+    //         key={key}
+    //         extra={getExtra()}
+    //       >
+    //         <p>{text}</p>
+    //       </Panel>
+    //     </Collapse>
+    //   );
+    // }
+    items.push(
+      // <Panel header={`This is panel header 4`} key="4">
+      <Collapse>
+        <Panel header={'My'} key="1" id="header-test">
           <p>{text}</p>
         </Panel>
-      );
-    }
-    items.push(
-      <Panel header={`This is panel header 4`} key="4">
-        <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
-          <Panel header={`This is panel nest panel`} key="1" id="header-test">
-            <p>{text}</p>
-          </Panel>
-        </Collapse>
-      </Panel>
+      </Collapse>
     );
+    // </Panel>
+    // items.push(
+    //   <Panel header={`This is panel header 4`} key="4">
+    //     <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
+    //       <Panel header={`This is panel nest panel`} key="1" id="header-test">
+    //         <p>{text}</p>
+    //       </Panel>
+    //     </Collapse>
+    //   </Panel>
+    // );
+    // items.push(
+    //   <Panel header={`This is panel header 4`} key="4">
+    //     <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
+    //       <Panel header={`This is panel nest panel`} key="1" id="header-test">
+    //         <p>{text}</p>
+    //       </Panel>
+    //     </Collapse>
+    //   </Panel>
+    // );
+    // items.push(
+    //   <Panel header={`This is panel header 4`} key="4">
+    //     <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
+    //       <Panel header={`This is panel nest panel`} key="1" id="header-test">
+    //         <p>{text}</p>
+    //       </Panel>
+    //     </Collapse>
+    //   </Panel>
+    // );
 
-    items.push(
-      <Panel header={`This is panel header 5`} key="5">
-        <Collapse defaultActiveKey="1">
-          <Panel header={`This is panel nest panel`} key="1" id="another-test">
-            <form>
-              <label htmlFor="test">Name:&nbsp;</label>
-              <input type="text" id="test" />
-            </form>
-          </Panel>
-        </Collapse>
-      </Panel>
-    );
+    // items.push(
+    //   <Panel header={`This is panel header 5`} key="5">
+    //     <Collapse defaultActiveKey="1">
+    //       <Panel header={`This is panel nest panel`} key="1" id="another-test">
+    //         <form>
+    //           <label htmlFor="test">Name:&nbsp;</label>
+    //           <input type="text" id="test" />
+    //         </form>
+    //       </Panel>
+    //     </Collapse>
+    //   </Panel>
+    // );
 
     return items;
   }
@@ -132,14 +163,14 @@ const SideBar = () => {
 
   const btn = accordion ? "Mode: accordion" : "Mode: collapse";
   return (
-    <div style={{ margin: 20, width: 400 }}>
-      <button onClick={reRender}>reRender</button>
+    <div className={styles.wrapper} style={{ width: 300 }}>
+      {/* <button onClick={reRender}>reRender</button>
       <button onClick={toggle}>{btn}</button>
       <br />
       <br />
       <button onClick={setActivityKey}>active header 2</button>
       <br />
-      <br />
+      <br /> */}
       <Collapse
         accordion={accordion}
         onChange={onChange}
