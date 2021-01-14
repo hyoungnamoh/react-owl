@@ -10,11 +10,15 @@ interface Props {
   children?: NextComponentType<NextPageContext, any, {}>
 }
 const Layout: FC<Props> = ({ children }) => {
+  const getChildrenStyle = (): React.CSSProperties => {
+    return userStore.data ? { marginLeft: 300 } : {};
+  }
   return (
     <div style={{ flex: 1 }}>
       <Header />
       <div style={{ marginTop: '8vh' }}>
-        {userStore.data && <SideBar />}{children}
+        {userStore.data && <SideBar />}
+        <div style={getChildrenStyle()}>{children}</div>
       </div>
     </div>
   );

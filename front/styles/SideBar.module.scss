@@ -1,10 +1,15 @@
 .wrapper {
   height: 92vh;
-  width: 160px;
+  width: 300px;
   position: fixed;
   z-index: 1;
   left: 0;
   overflow-y: scroll;
+
+  .collapse {
+    margin: 0px;
+    padding: 0px;
+  }
 }
 
 // 넓이같은 거 조정해주는 애 감싸고 있는?

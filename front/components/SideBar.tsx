@@ -42,34 +42,6 @@ const expandIcon = (props: ExpandIcon): React.ReactNode => {
     </i>
   );
 }
-
-function CustomHeader(props: any) {
-  console.log(props);
-  return (
-    <button
-      style={{
-        float: "right"
-      }}
-    >
-      <i style={{ marginRight: ".5rem" }}>
-        <svg
-          viewBox="0 0 1024 1024"
-          width="1em"
-          height="1em"
-          fill="currentColor"
-          style={{
-            verticalAlign: "-.125em",
-            transition: "transform .2s",
-            transform: `rotate(90deg)`
-          }}
-        >
-          <path d={arrowPath} p-id="5827" />
-        </svg>
-      </i>
-      <span>Custom label</span>
-    </button>
-  );
-}
 const SideBar = () => {
   const [accordion, setAccordion] = useState<boolean>(false);
   const [activeKey, setActiveKey] = useState<string[]>([]);
@@ -77,105 +49,35 @@ const SideBar = () => {
   const onChange = (activeKey: any) => {
     setActiveKey(activeKey);
   };
-  const getExtra = (...rest: any) => <CustomHeader custom={rest} />;
   const getItems = () => {
     const items = [];
-    // for (let i = 0, len = 3; i < len; i++) {
-    //   const key = i + 1;
-    //   items.push(
-    //     <Collapse defaultActiveKey="1">
-    //       <Panel
-    //         header={'My Task'}
-    //         key={key}
-    //         extra={getExtra()}
-    //       >
-    //         <p>{text}</p>
-    //       </Panel>
-    //     </Collapse>
-    //   );
-    // }
     items.push(
-      // <Panel header={`This is panel header 4`} key="4">
-      <Collapse>
-        <Panel header={'My'} key="1" id="header-test">
-          <p>{text}</p>
-        </Panel>
-      </Collapse>
+      <Panel header={'My Task'} key="4" style={{ margin: 0, padding: 0 }}>
+        <Collapse defaultActiveKey="1" expandIcon={expandIcon} className={styles.collapse}>
+          <Panel header={'Dashboard'} key="1" id="header-test" style={{ margin: 0, padding: 0 }}>
+            <p>{text}</p>
+          </Panel>
+        </Collapse>
+        <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
+          <Panel header={'Calendar'} key="1" id="header-test">
+            <p>{text}</p>
+          </Panel>
+        </Collapse>
+      </Panel>
     );
-    // </Panel>
-    // items.push(
-    //   <Panel header={`This is panel header 4`} key="4">
-    //     <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
-    //       <Panel header={`This is panel nest panel`} key="1" id="header-test">
-    //         <p>{text}</p>
-    //       </Panel>
-    //     </Collapse>
-    //   </Panel>
-    // );
-    // items.push(
-    //   <Panel header={`This is panel header 4`} key="4">
-    //     <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
-    //       <Panel header={`This is panel nest panel`} key="1" id="header-test">
-    //         <p>{text}</p>
-    //       </Panel>
-    //     </Collapse>
-    //   </Panel>
-    // );
-    // items.push(
-    //   <Panel header={`This is panel header 4`} key="4">
-    //     <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
-    //       <Panel header={`This is panel nest panel`} key="1" id="header-test">
-    //         <p>{text}</p>
-    //       </Panel>
-    //     </Collapse>
-    //   </Panel>
-    // );
-
-    // items.push(
-    //   <Panel header={`This is panel header 5`} key="5">
-    //     <Collapse defaultActiveKey="1">
-    //       <Panel header={`This is panel nest panel`} key="1" id="another-test">
-    //         <form>
-    //           <label htmlFor="test">Name:&nbsp;</label>
-    //           <input type="text" id="test" />
-    //         </form>
-    //       </Panel>
-    //     </Collapse>
-    //   </Panel>
-    // );
 
     return items;
   }
 
-  const setActivityKey = () => {
-    setActiveKey(["2"]);
-  };
-
-  const toggle = () => {
-    setAccordion(!accordion)
-  };
-
-  const reRender = () => {
-    // setState({
-    //   time: random()
-    // });
-  };
-
   const btn = accordion ? "Mode: accordion" : "Mode: collapse";
   return (
-    <div className={styles.wrapper} style={{ width: 300 }}>
-      {/* <button onClick={reRender}>reRender</button>
-      <button onClick={toggle}>{btn}</button>
-      <br />
-      <br />
-      <button onClick={setActivityKey}>active header 2</button>
-      <br />
-      <br /> */}
+    <div className={styles.wrapper}>
       <Collapse
         accordion={accordion}
         onChange={onChange}
         activeKey={activeKey}
         expandIcon={expandIcon}
+        style={{ margin: 0, padding: 0 }}
       >
         {getItems()}
       </Collapse>
