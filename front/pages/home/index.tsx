@@ -44,12 +44,12 @@ const Home = () => {
           }
         </div>
       </div>
-      <div className={styles.row} style={{marginTop: 50}} >
+      <div className={styles.row} style={{ marginTop: 50 }} >
         <div className={styles.myIssueChartContainer}>
           <p className={styles.title}>My Issue Progress Chart</p>
         </div>
       </div>
-      <div className={styles.row} style={{marginTop: 50}} >
+      <div className={styles.row} style={{ marginTop: 50 }} >
         <div className={styles.firstRowItem}>
           <p className={styles.title}>Project Contribution Chart</p>
         </div>

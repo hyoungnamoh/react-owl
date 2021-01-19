@@ -3,6 +3,7 @@ import Collapse, { Panel } from 'rc-collapse';
 import * as React from 'react';
 import { useState } from 'react';
 import "rc-collapse/assets/index.css";
+import { useRouter } from 'next/router';
 
 const text = `
   A dog is a type of domesticated animal.
@@ -43,26 +44,25 @@ const expandIcon = (props: ExpandIcon): React.ReactNode => {
   );
 }
 const SideBar = () => {
+  const router = useRouter();
   const [accordion, setAccordion] = useState<boolean>(false);
-  const [activeKey, setActiveKey] = useState<string[]>([]);
+  const [activeKey, setActiveKey] = useState<React.Key[]>([]);
 
-  const onChange = (activeKey: any) => {
+  const onChange = (activeKey: React.Key[]): void => {
     setActiveKey(activeKey);
   };
   const getItems = () => {
     const items = [];
     items.push(
-      <Panel header={'My Task'} key="4" style={{ margin: 0, padding: 0 }}>
-        <Collapse defaultActiveKey="1" expandIcon={expandIcon} className={styles.collapse}>
-          <Panel header={'Dashboard'} key="1" id="header-test" style={{ margin: 0, padding: 0 }}>
-            <p>{text}</p>
-          </Panel>
-        </Collapse>
-        <Collapse defaultActiveKey="1" expandIcon={expandIcon}>
-          <Panel header={'Calendar'} key="1" id="header-test">
-            <p>{text}</p>
-          </Panel>
-        </Collapse>
+      <Panel header={'My Task'} key="My Task">
+        <Panel header={'Dashboard'} key="Dashboard" id="header-test" className={styles.panelItem} onItemClick={() => router.push('/myTask/dashboard')}/>
+        <Panel header={'Calendar'} key="Calendar" id="header-test" className={styles.panelItem} />
+      </Panel>
+    );
+    items.push(
+      <Panel header={'Favorites'} key="Favorites" >
+        <Panel header={'favorite1'} key="favorite1" id="header-test" className={styles.panelItem} />
+        <Panel header={'favorite2'} key="favorite2" id="header-test"className={styles.panelItem}  onItemClick={() => console.log('hi')} />
       </Panel>
     );
 
