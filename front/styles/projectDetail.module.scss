@@ -1,0 +1,19 @@
+.wrapper {
+  .header {
+    display: flex;
+    height: 54px;
+    width: 100%;
+    border-bottom: 1px double rgb(50, 98, 149);
+    .projectNameContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      color: rgb(50, 98, 149);
+      padding: 12px;
+      background-color: red;
+    }
+    .tabContainer {
+    }
+  }
+}
