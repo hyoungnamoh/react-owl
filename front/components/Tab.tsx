@@ -1,4 +1,5 @@
 import { CSSProperties, FC } from "react";
+import styles from '../styles/Tab.module.scss';
 
 interface Item {
   onClick?: () => void,
@@ -11,10 +12,18 @@ interface Props {
   className?: 'string',
   style?: CSSProperties,
 }
-const Tab: FC<Props> = ({items, className, style}) => {
+const Tab: FC<Props> = ({ items, className, style }) => {
   return (
-    <div >
-
+    <div className={styles.wrapper}>
+      {
+        items.map((e, i) => {
+          return (
+            <div className={`${styles.tabItem} ${e.className}`} style={e.style}>
+              <p>{e.tabName ? e.tabName : `tab${i + 1}`}</p>
+            </div>
+          )
+        })
+      }
     </div>
   );
 };
