@@ -1,6 +1,6 @@
 import { useObserver } from 'mobx-react';
 import { useRouter } from 'next/router';
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 import Tab from '../../../components/Tab';
 import styles from '../../../styles/projectDetail.module.scss'
 
@@ -10,33 +10,26 @@ interface Project {
 }
 
 interface Item {
-  onClick?: () => void,
   style?: CSSProperties,
   className?: CSSProperties,
   tabName?: string,
-  selected: boolean,
 }
 
 const tabDumyData: Item[] = [
   {
     tabName: 'Dash Board',
-    selected: true,
   },
   {
     tabName: 'Calendar',
-    selected: false,
   },
   {
     tabName: 'Kanban Board',
-    selected: false,
   },
   {
     tabName: 'Notice',
-    selected: false,
   },
   {
     tabName: 'Drive',
-    selected: false,
   },
 ]
 const projectDumyData: Project = {
@@ -46,6 +39,11 @@ const projectDumyData: Project = {
 const projectDetail = () => {
   const router = useRouter();
   const { id } = router.query;
+  const [selected, setSelected] = useState<number>(0);
+  const onClickTab = (index: number): void => {
+    console.log(index);
+    setSelected(index);
+  }
   return useObserver(() =>
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -53,7 +51,7 @@ const projectDetail = () => {
           <p>{projectDumyData.projectName}</p>
         </div>
         <div className={styles.tabContainer}>
-          <Tab items={tabDumyData} selectedStyle={{borderBottomColor: '#326295', borderBottomWidth: 3}}/>
+          <Tab items={tabDumyData} selectedStyle={{borderBottom: '#326295 3px solid'}} onClick={onClickTab} selected={selected}/>
         </div>
       </div>
     </div>
