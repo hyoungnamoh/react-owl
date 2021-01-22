@@ -53,7 +53,7 @@ const projectDetail = () => {
           <p>{projectDumyData.projectName}</p>
         </div>
         <div className={styles.tabContainer}>
-          <Tab items={tabDumyData} />
+          <Tab items={tabDumyData} selectedStyle={{borderBottomColor: '#326295', borderBottomWidth: 3}}/>
         </div>
       </div>
     </div>

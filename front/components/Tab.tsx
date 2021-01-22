@@ -6,21 +6,30 @@ interface Item {
   style?: CSSProperties,
   className?: CSSProperties,
   tabName?: string,
+  selected: boolean,
 }
 interface Props {
   items: Item[],
   className?: 'string',
   style?: CSSProperties,
+  selectedStyle?: CSSProperties,
 }
-const Tab: FC<Props> = ({ items, className, style }) => {
+const Tab: FC<Props> = ({ items, className, style, selectedStyle }) => {
+  const getStyle = (e: Item): CSSProperties | undefined => {
+    let style = e.style;
+    if(e.selected) {
+      return {...style, ...selectedStyle};
+    }
+    return style;
+  }
   return (
     <div className={styles.wrapper}>
       {
         items.map((e, i) => {
           return (
-            <div className={`${styles.tabItem} ${e.className}`} style={e.style}>
+            <button className={`${styles.tabItem} ${e.className}`} style={getStyle(e)}>
               <p>{e.tabName ? e.tabName : `tab${i + 1}`}</p>
-            </div>
+            </button>
           )
         })
       }

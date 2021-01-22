@@ -6,9 +6,15 @@
     justify-content: center;
     flex: 1;
     align-items: center;
-    background-color: blue;
+    background-color: #ffffff;
+    border: transparent 1px solid;
+    color: #326295;
   }
-  .dltkdgo {
-    background-color: black;
+  // .selectedTabItem {
+  //   border-bottom: 3px solid #326295
+  // }
+  .tabItem:hover {
+    cursor: pointer;
+    border: #d8dde2 1px solid;
   }
 }
