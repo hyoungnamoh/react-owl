@@ -18,10 +18,35 @@
     }
     .projectSettingButtonContainer {
       display: flex;
-      justify-content: flex-end;
-      align-items: center;
+      justify-content: center;
+      align-items: flex-end;
       flex: 1;
-      
+      flex-direction: column;
+
+      .projectSettingMenu {
+        width: 160px;
+        height: 120px;
+        top: 125px;
+        right: 10px;
+        position: fixed;
+        background-color: #ffffff;
+        border: 1px solid #bbb;
+        border-radius: 2px;
+        .projectSettingMenuItem {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 33%;
+          .menuItemText {
+            color: #3e5569;
+            font-size: 14px;
+          }
+        }
+        .projectSettingMenuItem:hover {
+          cursor: pointer;
+          background-color: #f5f6f8;
+        }
+      }
     }
   }
 }
