@@ -11,11 +11,17 @@
       font-size: 20px;
       color: rgb(50, 98, 149);
       padding: 12px;
-      background-color: red;
       min-width: 200px;
     }
     .tabContainer {
       width: 60%;
+    }
+    .projectSettingButtonContainer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex: 1;
+      
     }
   }
 }

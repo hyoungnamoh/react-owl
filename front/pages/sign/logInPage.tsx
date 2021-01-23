@@ -9,13 +9,6 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import Buttons from '../../components/Buttons';
 import { userStore, User } from '../../store';
-interface item {
-  image: string,
-  onClick?: (e: React.MouseEvent) => void,
-  href?: string,
-  title?: string,
-  subTitle?: string,
-}
 
 const dummyUser: User = {
   email: 'zzzsh789@naver.com',
@@ -95,7 +88,7 @@ const LogInPage = () => {
     // });
   }
 
-  const items: item[] = [
+  const items: ButtonItem[] = [
     {
       image: '/images/login/naver.png',
       onClick: loginWithKakao,

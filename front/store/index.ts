@@ -1,22 +1,5 @@
 import { observable, action } from 'mobx';
 
-export interface User {
-  email: string,
-  password: string,
-  enabled: boolean,
-  name: string,
-  profilePic: string | null,
-  signFrom: string,
-  authOk: boolean,
-}
-
-interface UserStore {
-  isLoggingIn: boolean,
-  data: User | null,
-  logIn: (data: User) => void,
-  logOut: () => void,
-}
-
 const userStore = observable<UserStore>({
   isLoggingIn: false,
   data: null,

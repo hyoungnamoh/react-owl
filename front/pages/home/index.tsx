@@ -5,9 +5,6 @@ import { userStore } from '../../store';
 import styles from '../../styles/home.module.scss';
 import dayjs from 'dayjs'
 
-interface HomeData {
-
-}
 const homeData: HomeData | null = null;
 const days: string[] = ['일', '월', '화', '수', '목', '금', '토'];
 const Home = () => {

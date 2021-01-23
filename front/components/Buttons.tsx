@@ -3,16 +3,8 @@ import * as React from 'react';
 import { FC, useState, useMemo } from 'react';
 import styles from '../styles/Buttons.module.scss';
 
-
-interface item {
-  image: string,
-  onClick?: (e: React.MouseEvent) => void;
-  title?: string,
-  subTitle?: string,
-}
-
 interface Props {
-  items: item[],
+  items: ButtonItem[],
   itemStyle: React.CSSProperties,
   spacing: number,
   wrapperStyle?: React.CSSProperties,

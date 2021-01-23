@@ -3,19 +3,9 @@ import { useRouter } from 'next/router';
 import { CSSProperties, useState } from 'react';
 import Tab from '../../../components/Tab';
 import styles from '../../../styles/projectDetail.module.scss'
+import { FaUserCog } from 'react-icons/fa';
 
-interface Project {
-  id: string,
-  projectName: string,
-}
-
-interface Item {
-  style?: CSSProperties,
-  className?: CSSProperties,
-  tabName?: string,
-}
-
-const tabDumyData: Item[] = [
+const tabDumyData: TabItem[] = [
   {
     tabName: 'Dash Board',
   },
@@ -51,8 +41,12 @@ const projectDetail = () => {
           <p>{projectDumyData.projectName}</p>
         </div>
         <div className={styles.tabContainer}>
-          <Tab items={tabDumyData} selectedStyle={{borderBottom: '#326295 3px solid'}} onClick={onClickTab} selected={selected}/>
+          <Tab items={tabDumyData} selectedStyle={{ borderBottom: '#326295 3px solid' }} onClick={onClickTab} selected={selected} />
         </div>
+        <div className={styles.projectSettingButtonContainer}>
+          <FaUserCog color={'#326295'} style={{ width: '25%', height: '50%' }} />
+        </div>
+        {/* <img src={'/images/user-cog-solid.svg'} color={'#326295'}/> */}
       </div>
     </div>
   );

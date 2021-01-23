@@ -31,15 +31,6 @@ const expandIcon = (props: ExpandIcon): React.ReactNode => {
   );
 }
 
-interface ExpandIcon {
-  isActive: boolean,
-}
-
-interface Project {
-  id: string,
-  projectName: string,
-}
-
 interface Props {
 
 }

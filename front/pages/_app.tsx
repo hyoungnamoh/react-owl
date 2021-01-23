@@ -11,6 +11,7 @@ import BasicCheckBox from '../components/BasicCheckBox';
 import { Provider } from 'mobx-react';
 import { userStore } from '../store';
 
+
 //공용으로 사용할 axios base url
 axios.defaults.baseURL = baseURL;
 

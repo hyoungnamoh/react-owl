@@ -1,23 +1,15 @@
 import { CSSProperties, FC } from "react";
 import styles from '../styles/Tab.module.scss';
 
-interface Item {
-  style?: CSSProperties,
-  className?: CSSProperties,
-  tabName?: string,
-}
 interface Props {
-  items: Item[],
+  items: TabItem[],
   className?: 'string',
   style?: CSSProperties,
   selectedStyle?: CSSProperties,
   onClick?: (index: number) => void,
   selected: number,
 }
-interface GetStyleProps {
-  item: Item,
-  index: number,
-}
+
 const Tab: FC<Props> = ({ items, className, style, selectedStyle, selected, onClick }) => {
   const getStyle = ({ item, index }: GetStyleProps): CSSProperties | undefined => {
     let style = item.style;
