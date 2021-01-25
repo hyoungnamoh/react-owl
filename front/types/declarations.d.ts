@@ -3,7 +3,8 @@ declare module '*.scss';
 interface TabItem {
   style?: CSSProperties,
   className?: CSSProperties,
-  tabName?: string,
+  tabName?: 'Dash Board' | 'Calendar' | 'Kanban Board' | 'Notice' | 'Drive',
+  onClick?: () => void,
 }
 
 interface GetStyleProps {
@@ -48,4 +49,12 @@ interface UserStore {
 interface Project {
   id: string,
   projectName: string,
+}
+
+interface NoticeItem {
+  id: number,
+  title: string,
+  writer: string,
+  createdAt: dayjs.Dayjs,
+  view: number,
 }
