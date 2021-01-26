@@ -5,6 +5,7 @@ import Tab from '../../../components/Tab';
 import styles from '../../../styles/projectDetail.module.scss'
 import { FaUserCog } from 'react-icons/fa';
 import dayjs from 'dayjs';
+import getCalendar from '../../../utils/calendarUtil';
 
 
 const projectDumyData: Project = {
@@ -89,7 +90,9 @@ const projectDetail = () => {
   const getNoticeList = (): NoticeItem[] => {
     return noticeDummyData;
   }
-  console.log(noticeLits);
+  if (typeof window !== "undefined") {
+    console.log(getCalendar());
+  }
   return useObserver(() =>
     <div className={styles.wrapper}>
       <div className={styles.header}>
