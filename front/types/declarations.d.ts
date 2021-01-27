@@ -58,3 +58,8 @@ interface NoticeItem {
   createdAt: dayjs.Dayjs,
   view: number,
 }
+
+interface CalendarProps {
+  year: number,
+  month: number,
+}

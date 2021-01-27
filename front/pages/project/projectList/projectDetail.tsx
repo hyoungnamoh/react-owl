@@ -5,7 +5,7 @@ import Tab from '../../../components/Tab';
 import styles from '../../../styles/projectDetail.module.scss'
 import { FaUserCog } from 'react-icons/fa';
 import dayjs from 'dayjs';
-import getCalendar from '../../../utils/calendarUtil';
+import Calendar from '../../../components/Calendar';
 
 
 const projectDumyData: Project = {
@@ -90,9 +90,6 @@ const projectDetail = () => {
   const getNoticeList = (): NoticeItem[] => {
     return noticeDummyData;
   }
-  if (typeof window !== "undefined") {
-    console.log(getCalendar());
-  }
   return useObserver(() =>
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -121,7 +118,9 @@ const projectDetail = () => {
         </div>
         {/* <img src={'/images/user-cog-solid.svg'} color={'#326295'}/> */}
       </div>
-      <div style={{ backgroundColor: 'red', height: '100%' }}></div>
+      <div style={{ backgroundColor: 'red', height: 1000, width: 1000 }}>
+        <Calendar year={2021} month={1} />
+      </div>
     </div>
   );
 };
