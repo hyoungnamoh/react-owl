@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Buttons from '../../components/Buttons';
-import { userStore, User } from '../../store';
+import { userStore } from '../../store';
 
 const dummyUser: User = {
   email: 'zzzsh789@naver.com',
@@ -134,7 +134,7 @@ const LogInPage = () => {
 }
 
 export async function getStaticProps() {
-  return { props: {a: 'a'  } };
+  return { props: { a: 'a' } };
   // // Call an external API endpoint to get posts
   // const res = await fetch('https://.../posts')
   // const posts = await res.json()

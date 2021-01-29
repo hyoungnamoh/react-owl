@@ -118,7 +118,7 @@ const projectDetail = () => {
         </div>
         {/* <img src={'/images/user-cog-solid.svg'} color={'#326295'}/> */}
       </div>
-      <div style={{ backgroundColor: 'red', height: 1000, width: 1000 }}>
+      <div className={styles.calendar}>
         <Calendar year={2021} month={1} />
       </div>
     </div>

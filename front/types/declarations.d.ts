@@ -62,4 +62,9 @@ interface NoticeItem {
 interface CalendarProps {
   year: number,
   month: number,
+  className?: string,
+  style?: CSSProperties,
+  headerHeight?: number,
 }
+
+type day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] | ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
