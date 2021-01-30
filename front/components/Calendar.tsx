@@ -3,18 +3,17 @@ import styles from '../styles/Calendar.module.scss';
 import { getCalendarArray } from '../utils/calendarUtil';
 const Calendar: FC<CalendarProps> = ({ year, month, style, className, headerHeight }) => {
   const [calendarArray, setCalendarArray] = useState<number[][]>([]);
-  const [days, setDays] = useState<day>(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
+  const [days, setDays] = useState<days>(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
   useEffect(() => {
     setCalendarArray(getCalendarArray({ year, month }));
   }, [year, month]);
-  console.log(calendarArray);
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
+    <div className={styles.wrapper + ' ' + className} style={style}>
+      <div className={styles.header + ' ' + headerHeight}>
         {
           days.map((e: day) => {
             return (
-              <div className={styles.day}>
+              <div className={styles.dayOfWeek}>
                 {e}
               </div>
             )
@@ -24,11 +23,11 @@ const Calendar: FC<CalendarProps> = ({ year, month, style, className, headerHeig
       {
         calendarArray.map((week, wIndex) => {
           return (
-            <div style={{ display: 'flex', flexDirection: 'row', width: '100%', height: '100%' }}>
+            <div className={styles.week}>
               {
                 week.map((day, dIndex) => {
                   return (
-                    <div style={{ flex: 1 }}>
+                    <div className={styles.dayCell}>
                       {day}
                     </div>
                   )
