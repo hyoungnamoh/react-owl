@@ -69,3 +69,15 @@ interface CalendarProps {
 
 type days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] | ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 type day = 'Sun' | 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat';
+
+interface getDayStyleProps {
+  dIndex: number,
+}
+interface getDayGroundStyleProps {
+  isToday: boolean | undefined,
+}
+
+interface Week {
+  day: number,
+  isToday?: boolean,
+}

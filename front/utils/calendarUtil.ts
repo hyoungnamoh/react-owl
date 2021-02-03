@@ -1,4 +1,5 @@
-const getCalendarArray = ({ year, month }: CalendarProps): number[][] => {
+const getCalendarArray = ({ year, month }: CalendarProps): Week[][] => {
+  const today = new Date().getDay();
   const setDate: Date = new Date(year, month - 1, 1);
   const firstDayName: number = setDate.getDay(); // 5
 
@@ -9,18 +10,21 @@ const getCalendarArray = ({ year, month }: CalendarProps): number[][] => {
   let startDayCount: number = 1;
   let lastDayCount: number = 1;
 
-  let calendarArray: number[][] = [];
+  let calendarArray: Week[][] = [];
 
   for (let i = 0; i < 6; i++) {
-    let week = [];
+    let week: Week[] = [];
     for (let j = 0; j < 7; j++) {
       if (i === 0 && j < firstDayName) { // 첫 주, 이번달 첫 요일보다 앞일경우
-        week.push(prevLastDay - (firstDayName - 1) + j);
+        week.push({ day: prevLastDay - (firstDayName - 1) + j });
       } else if (startDayCount > lastDay) { //마지막날 지날 경우
-        week.push(lastDayCount);
+        week.push({ day: lastDayCount });
         lastDayCount++;
+      } else if (today === startDayCount) {
+        week.push({ day: startDayCount, isToday: true })
+        startDayCount++;
       } else {
-        week.push(startDayCount);
+        week.push({ day: startDayCount });
         startDayCount++;
       }
     }
