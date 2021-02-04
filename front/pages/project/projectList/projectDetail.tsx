@@ -118,8 +118,8 @@ const projectDetail = () => {
         </div>
         {/* <img src={'/images/user-cog-solid.svg'} color={'#326295'}/> */}
       </div>
-      <div className={styles.calendar} style={{padding: 50}}>
-        <Calendar year={2021} month={1}/>
+      <div className={styles.calendar} style={{padding: '20px 50px'}}>
+        <Calendar year={2021} month={1} />
       </div>
     </div>
   );

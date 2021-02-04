@@ -1,8 +1,8 @@
+import dayjs from 'dayjs';
 import { CSSProperties, FC, useEffect, useState } from 'react';
 import styles from '../styles/Calendar.module.scss';
 import { getCalendarArray } from '../utils/calendarUtil';
 
-const today = new Date().getDay();
 const Calendar: FC<CalendarProps> = ({ year, month, style, className, headerHeight }) => {
   const [calendarArray, setCalendarArray] = useState<Week[][]>([]);
   const [days, setDays] = useState<days>(['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']);
@@ -19,7 +19,19 @@ const Calendar: FC<CalendarProps> = ({ year, month, style, className, headerHeig
   }
   return (
     <div className={styles.wrapper + ' ' + className} style={style}>
-      <div className={styles.header + ' ' + headerHeight}>
+      <div className={styles.headerContainer}>
+        <div className={styles.headerButton}>
+          Today
+        </div>
+        <div className={styles.headerButton}>
+          {'<'}
+        </div>
+        <div className={styles.headerButton}>
+          {'>'}
+        </div>
+        <span className={styles.headerDate}>{dayjs().format('YYYY.MM')}</span>
+      </div>
+      <div className={styles.dayOfWeekWrapper + ' ' + headerHeight}>
         {
           days.map((e: day) => {
             return (
