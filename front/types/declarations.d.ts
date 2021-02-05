@@ -75,6 +75,7 @@ interface getDayStyleProps {
 }
 interface getDayGroundStyleProps {
   isToday: boolean | undefined,
+  dIndex: number,
 }
 
 interface Week {

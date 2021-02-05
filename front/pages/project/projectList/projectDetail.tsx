@@ -7,7 +7,7 @@ import { FaUserCog } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import Calendar from '../../../components/Calendar';
 
-
+const today = new Date();
 const projectDumyData: Project = {
   id: '123',
   projectName: '형남 프로젝트'
@@ -119,7 +119,7 @@ const projectDetail = () => {
         {/* <img src={'/images/user-cog-solid.svg'} color={'#326295'}/> */}
       </div>
       <div className={styles.calendar} style={{padding: '20px 50px'}}>
-        <Calendar year={2021} month={1} />
+        <Calendar year={today.getFullYear()} month={today.getMonth() + 1} />
       </div>
     </div>
   );
