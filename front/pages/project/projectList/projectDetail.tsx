@@ -15,27 +15,32 @@ const projectDumyData: Project = {
 const projectDetail = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [selected, setSelected] = useState<number>(0);
   const [onProjectSet, setOnProjectSet] = useState<boolean>(false);
   const [noticeLits, setNoticeList] = useState<NoticeItem[]>([]);
+  const [tab, setTab] = useState<TabType>('Dash Board')
   const menuRef = useRef(null);
 
   const tabDumyData: TabItem[] = [
     {
       tabName: 'Dash Board',
+      onClick: () => setTab('Dash Board'),
     },
     {
       tabName: 'Calendar',
+      onClick: () => setTab('Calendar'),
     },
     {
       tabName: 'Kanban Board',
+      onClick: () => setTab('Kanban Board'),
     },
     {
       tabName: 'Notice',
-      onClick: () => router.push('/project/projectList/projectDetail?id=123&tabName=notice'),
+      // onClick: () => router.push('/project/projectList/projectDetail?id=123&tabName=notice'),
+      onClick: () => setTab('Notice'),
     },
     {
       tabName: 'Drive',
+      onClick: () => setTab('Drive'),
     },
   ]
 
@@ -73,9 +78,6 @@ const projectDetail = () => {
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, [router.query])
-  const onClickTab = (index: number): void => {
-    setSelected(index);
-  }
 
   const onClickProjectSet = (): void => {
     setOnProjectSet(prevOnProjectSet => !prevOnProjectSet);
@@ -90,6 +92,34 @@ const projectDetail = () => {
   const getNoticeList = (): NoticeItem[] => {
     return noticeDummyData;
   }
+
+  const renderContents = () => {
+    switch (tab) {
+      case 'Dash Board':
+        return (
+          <div className={styles.calendar} style={{ padding: '20px 50px' }}>
+            <Calendar year={today.getFullYear()} month={today.getMonth() + 1} />
+          </div>
+        )
+      case 'Calendar':
+        return (
+          <div className={styles.calendar} style={{ padding: '20px 50px' }}>
+            <Calendar year={today.getFullYear()} month={today.getMonth() + 1} />
+          </div>
+        )
+      case 'Kanban Board':
+        return null;
+      case 'Notice':
+        return (
+          <div style={{ padding: '20px 50px' }}>
+            <NoticeTable />
+          </div>
+        )
+      case 'Drive':
+      default:
+        break;
+    }
+  }
   return useObserver(() =>
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -97,7 +127,7 @@ const projectDetail = () => {
           <p>{projectDumyData.projectName}</p>
         </div>
         <div className={styles.tabContainer}>
-          <Tab items={tabDumyData} selectedStyle={{ borderBottom: '#326295 3px solid' }} onClick={onClickTab} selected={selected} />
+          <Tab items={tabDumyData} selectedStyle={{ borderBottom: '#326295 3px solid' }} />
         </div>
         <div className={styles.projectSettingButtonContainer} >
           <FaUserCog color={'#326295'} style={{ width: '25%', height: '50%' }} onClick={() => onClickProjectSet()} />
@@ -118,9 +148,7 @@ const projectDetail = () => {
         </div>
         {/* <img src={'/images/user-cog-solid.svg'} color={'#326295'}/> */}
       </div>
-      <div className={styles.calendar} style={{padding: '20px 50px'}}>
-        <Calendar year={today.getFullYear()} month={today.getMonth() + 1} />
-      </div>
+      {renderContents()}
     </div>
   );
 };

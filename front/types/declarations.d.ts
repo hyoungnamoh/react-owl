@@ -1,9 +1,12 @@
 // We need to tell TypeScript that when we write "import styles from './styles.scss' we mean to load a module (to look for a './styles.scss.d.ts'). 
 declare module '*.scss';
+
+type TabType = 'Dash Board' | 'Calendar' | 'Kanban Board' | 'Notice' | 'Drive';
+
 interface TabItem {
   style?: CSSProperties,
   className?: CSSProperties,
-  tabName?: 'Dash Board' | 'Calendar' | 'Kanban Board' | 'Notice' | 'Drive',
+  tabName?: TabType,
   onClick?: () => void,
 }
 
@@ -81,4 +84,9 @@ interface getDayGroundStyleProps {
 interface Week {
   day: number,
   isToday?: boolean,
+}
+
+interface OnClickTabProps {
+  item: TabItem,
+  index: number,
 }
