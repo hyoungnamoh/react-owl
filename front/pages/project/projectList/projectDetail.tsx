@@ -6,6 +6,7 @@ import styles from '../../../styles/projectDetail.module.scss'
 import { FaUserCog } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import Calendar from '../../../components/Calendar';
+import NoticeTable from '../../../components/NoticeTable';
 
 const today = new Date();
 const projectDumyData: Project = {
@@ -44,29 +45,7 @@ const projectDetail = () => {
     },
   ]
 
-  const noticeDummyData: NoticeItem[] = [
-    {
-      id: 1,
-      title: '첫번째 게시글',
-      writer: '오도도',
-      createdAt: dayjs(),
-      view: 2,
-    },
-    {
-      id: 2,
-      title: '첫번째 게시글',
-      writer: '오도도',
-      createdAt: dayjs(),
-      view: 2,
-    },
-    {
-      id: 3,
-      title: '첫번째 게시글',
-      writer: '오도도',
-      createdAt: dayjs(),
-      view: 2,
-    },
-  ];
+  
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
@@ -88,10 +67,6 @@ const projectDetail = () => {
       setOnProjectSet(false);
     }
   };
-
-  const getNoticeList = (): NoticeItem[] => {
-    return noticeDummyData;
-  }
 
   const renderContents = () => {
     switch (tab) {

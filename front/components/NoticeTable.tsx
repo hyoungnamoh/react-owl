@@ -1,45 +1,118 @@
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import styles from '../styles/NoticeTable.module.scss';
+
+const noticeDummyData: NoticeItem[] = [
+  {
+    id: 1,
+    title: '첫번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 2,
+    title: '첫번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 3,
+    title: '첫번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+];
 const NoticeTable = () => {
+  const [noticeList, setNoticeList] = useState<NoticeItem[]>([]);
+  const [showing, setShowing] = useState<number>(10);
+  useEffect(() => {
+    getNoticeList();
+  }, []);
+
+  const getNoticeList = () => {
+    setNoticeList(noticeDummyData);
+  }
+
+  const getPagingButton = () => {
+    let pagingButton: string[] = [];
+    let totalPage: number = Math.ceil(noticeList.length / showing);
+    console.log(totalPage);
+    if (noticeList.length <= 0) {
+      return pagingButton;
+    }
+    pagingButton.push('Previous');
+
+    noticeList.forEach(element => {
+
+    });
+  }
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         Notice
-            </div>
+      </div>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           Show 셀렉트박스 entries
-              </div>
+        </div>
         <div>
           Search:
-              </div>
+        </div>
       </div>
       <div>
-        <div style={{ border: '2px solid #dee2e6', display: 'flex', flexDirection: 'column' }}>
-          <div style={{ borderBottom: '2px solid #dee2e6', height: 50, display: 'flex' }}>
-            <div style={{ flex: 1, borderRight: '2px solid #dee2e6', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div className={styles.tableHeader}>
+          <div className={styles.tableRow}>
+            <div className={styles.tableCell} style={{ flex: 1 }}>
               NO
-                  </div>
-            <div style={{ flex: 4, borderRight: '2px solid #dee2e6', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            </div>
+            <div className={styles.tableCell} style={{ flex: 4 }}>
               제목
-                  </div>
-            <div style={{ flex: 1.5, borderRight: '2px solid #dee2e6', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            </div>
+            <div className={styles.tableCell} style={{ flex: 1.5 }}>
               작성자
-                  </div>
-            <div style={{ flex: 1.5, borderRight: '2px solid #dee2e6', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            </div>
+            <div className={styles.tableCell} style={{ flex: 1.5 }}>
               작성일
-                  </div>
-            <div style={{ flex: 1, borderRight: '2px solid #dee2e6', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            </div>
+            <div className={styles.tableCell} style={{ flex: 1 }}>
               조회수
-                  </div>
+            </div>
           </div>
           {
             noticeDummyData.map(e => {
+              console.log(e);
               return (
-                <div>
-
+                <div className={styles.tableRow}>
+                  <div className={styles.tableCell} style={{ flex: 1 }}>
+                    {e.id}
+                  </div>
+                  <div className={styles.tableCell} style={{ flex: 4 }}>
+                    {e.title}
+                  </div>
+                  <div className={styles.tableCell} style={{ flex: 1.5 }}>
+                    {e.writer}
+                  </div>
+                  <div className={styles.tableCell} style={{ flex: 1.5 }}>
+                    {e.createdAt}
+                  </div>
+                  <div className={styles.tableCell} style={{ flex: 1 }}>
+                    {e.view}
+                  </div>
                 </div>
               );
             })
           }
+        </div>
+      </div>
+      <div>
+        <div>
+          Showing 1 to 1 of 1 entries
+      </div>
+        <div>
+          {getPagingButton()}
         </div>
       </div>
     </>

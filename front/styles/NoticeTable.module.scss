@@ -1,0 +1,18 @@
+.tableHeader {
+  border: 2px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+}
+
+.tableRow {
+  border-bottom: 2px solid #dee2e6;
+  height: 50px;
+  display: flex;
+}
+
+.tableCell {
+  border-right: 2px solid #dee2e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
