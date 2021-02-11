@@ -28,6 +28,7 @@ const noticeDummyData: NoticeItem[] = [
 const NoticeTable = () => {
   const [noticeList, setNoticeList] = useState<NoticeItem[]>([]);
   const [showing, setShowing] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   useEffect(() => {
     getNoticeList();
   }, []);
@@ -39,15 +40,15 @@ const NoticeTable = () => {
   const getPagingButton = () => {
     let pagingButton: string[] = [];
     let totalPage: number = Math.ceil(noticeList.length / showing);
+    let pagingButtonCount = (totalPage / 10 + 1) > 5 ? 5 : (totalPage / 10 + 1);
     console.log(totalPage);
     if (noticeList.length <= 0) {
       return pagingButton;
     }
     pagingButton.push('Previous');
-
-    noticeList.forEach(element => {
-
-    });
+    for(let i = currentPage; i < pagingButtonCount; i++) {
+      pagingButton.push(`${i + 1}`);
+    }
   }
   return (
     <>

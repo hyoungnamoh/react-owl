@@ -90,3 +90,25 @@ interface OnClickTabProps {
   item: TabItem,
   index: number,
 }
+
+interface PagingButtonProps {
+  totalPage: number,
+  currentPage: number,
+  movePage: () => {},
+}
+
+interface PagingBuggonVisibleProps {
+  visible: boolean,
+}
+
+interface PagingItemProps {
+  isActive: boolean,
+  image: string,
+  pageText: string,
+  pageNumber: number,
+  onClick: () => {},
+}
+
+interface GetPagingItemStyleProps {
+  type: string,
+}
