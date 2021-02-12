@@ -1,4 +1,6 @@
 import React, { Component, FC } from "react";
+import PagingItem from "./PagingItem";
+import styles from '../styles/PagingButton.module.scss';
 
 const pageRangeDisplayed = 5;
 const prevPageImg = '/images/paging/prev_page_icon.png';
@@ -64,35 +66,35 @@ const PagingButton: FC<PagingButtonProps> = ({ totalPage, currentPage, movePage 
       i++
     ) {
       pages.push(
-        <PageItem
+        <PagingItem
           isActive={i === currentPage}
-          key={i}
+          key={`${i}`}
           pageNumber={i}
           pageText={i + ""}
-          onClick={movePage}
+          movePage={movePage}
         />
       );
     }
 
     isPrevPageVisible({ visible: pageInfo.has_previous_page }) &&
       pages.unshift(
-        <PageItem
+        <PagingItem
           key={"prev" + pageInfo.previous_page}
           pageNumber={pageInfo.previous_page}
-          onClick={movePage}
-          image={prevPageImg}
-          isDisabled={!pageInfo.has_previous_page}
+          movePage={movePage}
+          image={'<'}
+          disabled={!pageInfo.has_previous_page}
         />
       );
 
     isNextPageVisible({ visible: pageInfo.has_next_page }) &&
       pages.push(
-        <PageItem
+        <PagingItem
           key={"next" + pageInfo.next_page}
           pageNumber={pageInfo.next_page}
-          onClick={movePage}
-          image={nextPageImg}
-          isDisabled={!pageInfo.has_next_page}
+          movePage={movePage}
+          image={'>'}
+          disabled={!pageInfo.has_next_page}
         />
       );
 

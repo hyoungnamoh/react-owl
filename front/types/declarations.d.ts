@@ -94,7 +94,7 @@ interface OnClickTabProps {
 interface PagingButtonProps {
   totalPage: number,
   currentPage: number,
-  movePage: () => {},
+  movePage: (page: number) => void,
 }
 
 interface PagingBuggonVisibleProps {
@@ -102,11 +102,13 @@ interface PagingBuggonVisibleProps {
 }
 
 interface PagingItemProps {
-  isActive: boolean,
-  image: string,
-  pageText: string,
+  key: string,
+  pageText?: string,
   pageNumber: number,
-  onClick: () => {},
+  movePage: (page: number) => void,
+  isActive?: boolean,
+  disabled?: boolean,
+  image?: string,
 }
 
 interface GetPagingItemStyleProps {

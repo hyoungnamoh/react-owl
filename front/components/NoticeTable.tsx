@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import styles from '../styles/NoticeTable.module.scss';
+import PagingButton from "./PagingButton";
 
 const noticeDummyData: NoticeItem[] = [
   {
@@ -12,14 +13,77 @@ const noticeDummyData: NoticeItem[] = [
   },
   {
     id: 2,
-    title: '첫번째 게시글',
+    title: '두번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
   },
   {
     id: 3,
+    title: '세번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 1,
     title: '첫번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 2,
+    title: '두번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 3,
+    title: '세번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 1,
+    title: '첫번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 2,
+    title: '두번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 3,
+    title: '세번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 1,
+    title: '첫번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 2,
+    title: '두번째 게시글',
+    writer: '오도도',
+    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+    view: 2,
+  },
+  {
+    id: 3,
+    title: '세번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
@@ -31,25 +95,43 @@ const NoticeTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   useEffect(() => {
     getNoticeList();
-  }, []);
+  }, [currentPage]);
 
-  const getNoticeList = () => {
+  const getNoticeList = (page?: number) => {
+    console.log(noticeDummyData);
+    if (page) {
+      setCurrentPage(page);
+    }
     setNoticeList(noticeDummyData);
   }
 
-  const getPagingButton = () => {
-    let pagingButton: string[] = [];
-    let totalPage: number = Math.ceil(noticeList.length / showing);
-    let pagingButtonCount = (totalPage / 10 + 1) > 5 ? 5 : (totalPage / 10 + 1);
-    console.log(totalPage);
-    if (noticeList.length <= 0) {
-      return pagingButton;
-    }
-    pagingButton.push('Previous');
-    for(let i = currentPage; i < pagingButtonCount; i++) {
-      pagingButton.push(`${i + 1}`);
+  const movePage = (page: number) => {
+    if (page !== currentPage) {
+      noticeDummyData.push({
+        id: 4,
+        title: '네번째 게시글',
+        writer: '오도도',
+        createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+        view: 5,
+      },
+        {
+          id: 5,
+          title: '다섯번째 게시글',
+          writer: '오도도',
+          createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+          view: 2,
+        },
+        {
+          id: 6,
+          title: '여섯번째 게시글',
+          writer: '오도도',
+          createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
+          view: 1,
+        });
+      getNoticeList(page);
     }
   }
+  console.log(currentPage);
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -83,8 +165,8 @@ const NoticeTable = () => {
             </div>
           </div>
           {
-            noticeDummyData.map(e => {
-              console.log(e);
+            noticeList.map(e => {
+              console.log(noticeList);
               return (
                 <div className={styles.tableRow}>
                   <div className={styles.tableCell} style={{ flex: 1 }}>
@@ -113,7 +195,7 @@ const NoticeTable = () => {
           Showing 1 to 1 of 1 entries
       </div>
         <div>
-          {getPagingButton()}
+          <PagingButton totalPage={noticeDummyData.length / 10 + 1} currentPage={currentPage} movePage={movePage} />
         </div>
       </div>
     </>

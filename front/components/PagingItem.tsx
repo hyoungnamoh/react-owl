@@ -1,35 +1,22 @@
-import React, { Component, FC } from "react";
-const PagingItem: FC<PagingItemProps> = ({ isActive, image, pageText, pageNumber, onClick }) => {
-  const getPagingItemStyle = ({ type }: GetPagingItemStyleProps) => {
-    switch (type) {
-      case 'color':
-        return isActive ? '#000000' : '#b0b0b0';
-      case 'fontWeight':
-        return isActive ? 400 : 200;
-      default:
-        break;
-    }
-    return 'd';
+import React, { Component, CSSProperties, FC } from "react";
+const PagingItem: FC<PagingItemProps> = ({ isActive, image, pageText, pageNumber, movePage }) => {
+  const getPagingItemStyle = (isActive: boolean | undefined): CSSProperties => {
+    return {
+      padding: '0px 5px',
+      color: isActive ? '#000000' : '#b0b0b0',
+      fontWeight: isActive ? 400 : 200,
+      cursor: 'pointer'
+    };
   }
 
   const renderTextOrImage = () => {
-    if (!!image) {
-      return <img style={{ height: 15 }} src={image} />
-    } else {
-      return pageText
-    }
-
+    return pageText;
   }
 
   return (
     <span
-      style={{
-        padding: '0px 5px',
-        color: getPagingItemStyle({ type: 'color' }),
-        fontWeight: getPagingItemStyle({ type: 'fontWeight' }),
-        cursor: 'pointer'
-      }}
-      onClick={() => onClick(pageNumber)}>
+      style={getPagingItemStyle(isActive)}
+      onClick={() => movePage(pageNumber)}>
       {renderTextOrImage()}
     </span>
   )
