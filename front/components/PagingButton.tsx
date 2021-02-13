@@ -8,6 +8,7 @@ const nextPageImg = '/images/paging/next_page_icon.png';
 
 
 const PagingButton: FC<PagingButtonProps> = ({ totalPage, currentPage, movePage }) => {
+  console.log(totalPage)
   const makePageInfo = () => {
     let total_pages = totalPage;
     let current_page = currentPage;
@@ -100,8 +101,6 @@ const PagingButton: FC<PagingButtonProps> = ({ totalPage, currentPage, movePage 
 
     return pages;
   }
-
-  if (totalPage == 1) return null;
 
   const pages = buildPages();
   return <div className={styles.pages_wrap}> {pages} </div>;

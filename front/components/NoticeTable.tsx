@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import styles from '../styles/NoticeTable.module.scss';
 import PagingButton from "./PagingButton";
 
-const noticeDummyData: NoticeItem[] = [
+let noticeDummyData: NoticeItem[] = [
   {
     id: 1,
     title: '첫번째 게시글',
@@ -26,64 +26,50 @@ const noticeDummyData: NoticeItem[] = [
     view: 2,
   },
   {
-    id: 1,
+    id: 4,
     title: '첫번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
   },
   {
-    id: 2,
+    id: 5,
     title: '두번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
   },
   {
-    id: 3,
+    id: 6,
     title: '세번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
   },
   {
-    id: 1,
+    id: 7,
     title: '첫번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
   },
   {
-    id: 2,
+    id: 8,
     title: '두번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
   },
   {
-    id: 3,
+    id: 9,
     title: '세번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
   },
   {
-    id: 1,
+    id: 10,
     title: '첫번째 게시글',
-    writer: '오도도',
-    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
-    view: 2,
-  },
-  {
-    id: 2,
-    title: '두번째 게시글',
-    writer: '오도도',
-    createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
-    view: 2,
-  },
-  {
-    id: 3,
-    title: '세번째 게시글',
     writer: '오도도',
     createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
     view: 2,
@@ -93,45 +79,50 @@ const NoticeTable = () => {
   const [noticeList, setNoticeList] = useState<NoticeItem[]>([]);
   const [showing, setShowing] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchValue, setSearchValue] = useState<string>('');
+  const timerRef = useRef<number>(0);
   useEffect(() => {
     getNoticeList();
   }, [currentPage]);
 
-  const getNoticeList = (page?: number) => {
-    console.log(noticeDummyData);
+  const getNoticeList = useCallback((page?: number) => {
+    window.scrollTo(0, 0);
     if (page) {
       setCurrentPage(page);
     }
     setNoticeList(noticeDummyData);
-  }
+  }, [noticeList]);
 
-  const movePage = (page: number) => {
+  const movePage = useCallback((page: number) => {
     if (page !== currentPage) {
-      noticeDummyData.push({
-        id: 4,
-        title: '네번째 게시글',
-        writer: '오도도',
-        createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
-        view: 5,
-      },
-        {
-          id: 5,
-          title: '다섯번째 게시글',
-          writer: '오도도',
-          createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
-          view: 2,
-        },
-        {
-          id: 6,
-          title: '여섯번째 게시글',
-          writer: '오도도',
-          createdAt: dayjs().format('YYYY-MM-DD HH:mm'),
-          view: 1,
-        });
+      noticeDummyData = noticeList.map(e => {
+        e.id = e.id + 10;
+        return e;
+      });
       getNoticeList(page);
     }
+  }, [noticeList, currentPage]);
+
+  const getSearchResult = () => {
+    console.log(searchValue);
+    if (!searchValue) {
+      console.log('set 해줬는디요')
+      setNoticeList(noticeDummyData);
+      return;
+    }
+    setNoticeList(noticeDummyData.filter(e => e.title === searchValue || e.writer === searchValue));
   }
-  console.log(currentPage);
+
+  const onChangeSearchValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+    }
+    timerRef.current = window.setTimeout(() => {
+      getSearchResult();
+    }, 1000);
+  }, [searchValue]);
+  console.log(noticeList);
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -143,6 +134,7 @@ const NoticeTable = () => {
         </div>
         <div>
           Search:
+          <input value={searchValue} onChange={onChangeSearchValue} />
         </div>
       </div>
       <div>
@@ -166,7 +158,6 @@ const NoticeTable = () => {
           </div>
           {
             noticeList.map(e => {
-              console.log(noticeList);
               return (
                 <div className={styles.tableRow}>
                   <div className={styles.tableCell} style={{ flex: 1 }}>
@@ -195,7 +186,7 @@ const NoticeTable = () => {
           Showing 1 to 1 of 1 entries
       </div>
         <div>
-          <PagingButton totalPage={noticeDummyData.length / 10 + 1} currentPage={currentPage} movePage={movePage} />
+          <PagingButton totalPage={Math.ceil(noticeDummyData.length / 10)} currentPage={currentPage} movePage={movePage} />
         </div>
       </div>
     </>
