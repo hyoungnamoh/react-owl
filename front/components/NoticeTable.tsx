@@ -181,12 +181,12 @@ const NoticeTable = () => {
           }
         </div>
       </div>
-      <div>
+      <div className={styles.pagingRow}>
         <div>
           Showing 1 to 1 of 1 entries
-      </div>
+        </div>
         <div>
-          <PagingButton totalPage={Math.ceil(noticeDummyData.length / 10)} currentPage={currentPage} movePage={movePage} />
+          <PagingButton totalPage={10} currentPage={currentPage} movePage={movePage} />
         </div>
       </div>
     </>

@@ -8,7 +8,6 @@ const nextPageImg = '/images/paging/next_page_icon.png';
 
 
 const PagingButton: FC<PagingButtonProps> = ({ totalPage, currentPage, movePage }) => {
-  console.log(totalPage)
   const makePageInfo = () => {
     let total_pages = totalPage;
     let current_page = currentPage;
@@ -83,7 +82,7 @@ const PagingButton: FC<PagingButtonProps> = ({ totalPage, currentPage, movePage 
           key={"prev" + pageInfo.previous_page}
           pageNumber={pageInfo.previous_page}
           movePage={movePage}
-          image={'<'}
+          pageText={'Previous'}
           disabled={!pageInfo.has_previous_page}
         />
       );
@@ -94,7 +93,7 @@ const PagingButton: FC<PagingButtonProps> = ({ totalPage, currentPage, movePage 
           key={"next" + pageInfo.next_page}
           pageNumber={pageInfo.next_page}
           movePage={movePage}
-          image={'>'}
+          pageText={'Next'}
           disabled={!pageInfo.has_next_page}
         />
       );
@@ -102,8 +101,7 @@ const PagingButton: FC<PagingButtonProps> = ({ totalPage, currentPage, movePage 
     return pages;
   }
 
-  const pages = buildPages();
-  return <div className={styles.pages_wrap}> {pages} </div>;
+  return <div className={styles.buttonWrapper}> {buildPages()} </div>;
 }
 
 export default PagingButton;
