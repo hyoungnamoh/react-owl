@@ -75,15 +75,27 @@ let noticeDummyData: NoticeItem[] = [
     view: 2,
   },
 ];
+
+const showEntries = ['10', '25', '50', 'All'] as const;
 const NoticeTable = () => {
   const [noticeList, setNoticeList] = useState<NoticeItem[]>([]);
   const [showing, setShowing] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState<string>('');
+  const [showEntry, setShowEntry] = useState<string>('10');
   const timerRef = useRef<number>(0);
   useEffect(() => {
     getNoticeList();
   }, [currentPage]);
+
+  useEffect(() => {
+    if (timerRef.current) {
+      window.clearTimeout(timerRef.current);
+    }
+    timerRef.current = window.setTimeout(() => {
+      getSearchResult();
+    }, 400);
+  }, [searchValue]);
 
   const getNoticeList = useCallback((page?: number) => {
     window.scrollTo(0, 0);
@@ -91,7 +103,7 @@ const NoticeTable = () => {
       setCurrentPage(page);
     }
     setNoticeList(noticeDummyData);
-  }, [noticeList]);
+  }, [noticeList, showEntry]);
 
   const movePage = useCallback((page: number) => {
     if (page !== currentPage) {
@@ -104,44 +116,55 @@ const NoticeTable = () => {
   }, [noticeList, currentPage]);
 
   const getSearchResult = () => {
-    console.log(searchValue);
+    console.log('getSearchResult');
     if (!searchValue) {
-      console.log('set 해줬는디요')
       setNoticeList(noticeDummyData);
       return;
     }
-    setNoticeList(noticeDummyData.filter(e => e.title === searchValue || e.writer === searchValue));
+    setNoticeList(noticeDummyData.filter(e => e.title.includes(searchValue) || e.writer.includes(searchValue)));
   }
 
   const onChangeSearchValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    if (timerRef.current) {
-      window.clearTimeout(timerRef.current);
-    }
-    timerRef.current = window.setTimeout(() => {
-      getSearchResult();
-    }, 1000);
   }, [searchValue]);
-  console.log(noticeList);
+
+  const onChangeShowEntry = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    setShowEntry(e.target.value);
+  }, [showEntry]);
+
+  const onClickNoSort = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setShowEntry(e.target.value);
+  }, [showEntry]);
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className={styles.headerTitle}>
         Notice
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div className={styles.searchRow}>
         <div>
-          Show 셀렉트박스 entries
+          Show
+          <select value={showEntry} onChange={onChangeShowEntry} className={styles.showEntrySelectBox}>
+            {
+              showEntries.map(e => {
+                return <option label={e} value={e} />;
+              })
+            }
+          </select>
+          entries
         </div>
         <div>
           Search:
-          <input value={searchValue} onChange={onChangeSearchValue} />
+          <input value={searchValue} onChange={onChangeSearchValue} className={styles.searchInput} />
         </div>
       </div>
       <div>
-        <div className={styles.tableHeader}>
-          <div className={styles.tableRow}>
+        <div className={styles.table}>
+          <div className={styles.tableHeader}>
             <div className={styles.tableCell} style={{ flex: 1 }}>
               NO
+              <div style={{ display: 'flex', position: 'relative', left: '30%' }} onClick={onClickNoSort}>
+                <p style={{ marginRight: '-6px', fontSize: 15 }}>↑</p><p style={{ fontSize: 15 }}>↓</p>
+              </div>
             </div>
             <div className={styles.tableCell} style={{ flex: 4 }}>
               제목
@@ -186,7 +209,7 @@ const NoticeTable = () => {
           Showing 1 to 1 of 1 entries
         </div>
         <div>
-          <PagingButton totalPage={10} currentPage={currentPage} movePage={movePage} />
+          <PagingButton totalPage={Math.ceil(noticeDummyData.length / 10)} currentPage={currentPage} movePage={movePage} />
         </div>
       </div>
     </>
