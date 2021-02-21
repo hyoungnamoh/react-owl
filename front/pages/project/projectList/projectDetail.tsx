@@ -7,6 +7,7 @@ import { FaUserCog } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import Calendar from '../../../components/Calendar';
 import NoticeTable from '../../../components/NoticeTable';
+import KanbanBoard from '../../../components/KanbanBoard';
 
 const today = new Date();
 const projectDumyData: Project = {
@@ -45,7 +46,7 @@ const projectDetail = () => {
     },
   ]
 
-  
+
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
@@ -83,7 +84,11 @@ const projectDetail = () => {
           </div>
         )
       case 'Kanban Board':
-        return null;
+        return (
+          <div style={{ padding: '20px 30px' }}>
+            <KanbanBoard />
+          </div>
+        )
       case 'Notice':
         return (
           <div style={{ padding: '20px 50px' }}>

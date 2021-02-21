@@ -83,6 +83,7 @@ const NoticeTable = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [searchValue, setSearchValue] = useState<string>('');
   const [showEntry, setShowEntry] = useState<string>('10');
+  const [noOderBy, setNoOderBy] = useState<boolean>(false);
   const timerRef = useRef<number>(0);
   useEffect(() => {
     getNoticeList();
@@ -96,6 +97,14 @@ const NoticeTable = () => {
       getSearchResult();
     }, 400);
   }, [searchValue]);
+
+  useEffect(() => {
+    if (noOderBy) {
+      setNoticeList([...noticeList.sort((a, b) => b.id - a.id)]);
+    } else {
+      setNoticeList([...noticeList.sort((a, b) => a.id - b.id)]);
+    }
+  }, [noOderBy]);
 
   const getNoticeList = useCallback((page?: number) => {
     window.scrollTo(0, 0);
@@ -116,7 +125,6 @@ const NoticeTable = () => {
   }, [noticeList, currentPage]);
 
   const getSearchResult = () => {
-    console.log('getSearchResult');
     if (!searchValue) {
       setNoticeList(noticeDummyData);
       return;
@@ -132,9 +140,10 @@ const NoticeTable = () => {
     setShowEntry(e.target.value);
   }, [showEntry]);
 
-  const onClickNoSort = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setShowEntry(e.target.value);
-  }, [showEntry]);
+  const onClickNoSort = useCallback(() => {
+    setNoOderBy(!noOderBy);
+  }, [noticeList, noOderBy]);
+
   return (
     <>
       <div className={styles.headerTitle}>
@@ -163,7 +172,7 @@ const NoticeTable = () => {
             <div className={styles.tableCell} style={{ flex: 1 }}>
               NO
               <div style={{ display: 'flex', position: 'relative', left: '30%' }} onClick={onClickNoSort}>
-                <p style={{ marginRight: '-6px', fontSize: 15 }}>↑</p><p style={{ fontSize: 15 }}>↓</p>
+                <p style={{ marginRight: '-7px', fontSize: 15, color: noOderBy ? '#e0ebeb' : '' }}>↑</p><p style={{ fontSize: 15, color: !noOderBy ? '#e0ebeb' : '' }}>↓</p>
               </div>
             </div>
             <div className={styles.tableCell} style={{ flex: 4 }}>
