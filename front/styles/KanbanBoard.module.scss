@@ -32,13 +32,16 @@
   cursor: pointer;
 }
 
-.selectViewTypeButton {
+.selectViewTypeButtonWrapper {
   display: flex;
   align-items: center;
+}
+
+.selectViewTypeButton {
   width: 34px;
   height: 34px;
 }
 
-.selectViewTypeButton :hover {
+.selectViewTypeButtonWrapper :hover {
   cursor: pointer;
 }

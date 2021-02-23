@@ -85,7 +85,7 @@ const projectDetail = () => {
         )
       case 'Kanban Board':
         return (
-          <div style={{ padding: '20px 30px' }}>
+          <div style={{ }}>
             <KanbanBoard />
           </div>
         )
