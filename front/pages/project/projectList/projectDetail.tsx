@@ -73,25 +73,25 @@ const projectDetail = () => {
     switch (tab) {
       case 'Dash Board':
         return (
-          <div className={styles.calendar} style={{ padding: '20px 50px' }}>
+          <div className={styles.calendar} style={{ padding: '20px 35px' }}>
             <Calendar year={today.getFullYear()} month={today.getMonth() + 1} />
           </div>
         )
       case 'Calendar':
         return (
-          <div className={styles.calendar} style={{ padding: '20px 50px' }}>
+          <div className={styles.calendar} style={{ padding: '20px 35px' }}>
             <Calendar year={today.getFullYear()} month={today.getMonth() + 1} />
           </div>
         )
       case 'Kanban Board':
         return (
-          <div style={{ }}>
+          <div style={{ padding: '20px 35px' }}>
             <KanbanBoard />
           </div>
         )
       case 'Notice':
         return (
-          <div style={{ padding: '20px 50px' }}>
+          <div style={{ padding: '20px 35px' }}>
             <NoticeTable />
           </div>
         )

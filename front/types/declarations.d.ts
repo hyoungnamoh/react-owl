@@ -114,3 +114,9 @@ interface PagingItemProps {
 interface GetPagingItemStyleProps {
   type: string,
 }
+
+interface KanbanBoardDummyDataItem {
+  belongTo: string,
+  index: number,
+  content: string,
+}
