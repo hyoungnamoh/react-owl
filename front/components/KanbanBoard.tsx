@@ -40,128 +40,65 @@ const KanbanBoard = () => {
           </div>
         </div>
       </div>
-      <div style={{ minWidth: 260, backgroundColor: 'gainsboro', display: 'flex', width: '100%' }}>
-        <div style={{ backgroundColor: 'honeydew', height: 50, position: 'sticky' }}>
-          OOOO 몇개 Issue
-        </div>
-        <div style={{ backgroundColor: 'honeydew', height: 50 }}>
-          OOOO 몇개 Issue
-          </div>
-        <div style={{ backgroundColor: 'honeydew', height: 50 }}>
-          OOOO 몇개 Issue
-          </div>
-        <div style={{ backgroundColor: 'honeydew', height: 50 }}>
-          OOOO 몇개 Issue
-          </div>
-        <div style={{ backgroundColor: 'honeydew', height: 50 }}>
-          OOOO 몇개 Issue
-          </div>
-        <div style={{ backgroundColor: 'honeydew', height: 50 }}>
-          OOOO 몇개 Issue
-          </div>
-        <div style={{ backgroundColor: 'honeydew', height: 50 }}>
-          OOOO 몇개 Issue
-          </div>
-        <div style={{ backgroundColor: 'honeydew', height: 50 }}>
-          OOOO 몇개 Issue
-          </div>
-        <div style={{ backgroundColor: 'honeydew', height: 50 }}>
-          OOOO 몇개 Issue
-          </div>
-      </div>
-      <div style={{ backgroundColor: 'gold', display: 'flex', width: '100%', height: '77vh', overflow: 'scroll' }}>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-1번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-2번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-1번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-2번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-1번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-2번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-1번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-2번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-1번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-2번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-1번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-2번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-1번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-2번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-1번 이슈
-          </div>
-          <div style={{ backgroundColor: 'gray', height: 120, }}>
-            1-2번 이슈
+      <div style={{ backgroundColor: 'gold', display: 'flex', flexDirection: 'column', width: '100%', height: '82vh', overflow: 'scroll' }}>
+        <div style={{ backgroundColor: 'gainsboro', display: 'flex', width: '100%' }}>
+          <div style={{ backgroundColor: 'honeydew', height: 50, minWidth: 260 }}>
+            OOOO 몇개 Issue
           </div>
         </div>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'red', height: 120, }}>
-            2-1번 이슈
+        <div style={{ display: 'flex' }}>
+          <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-1번 이슈
           </div>
-        </div>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'violet', height: 120, }}>
-            3-1번 이슈
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-2번 이슈
           </div>
-        </div>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'violet', height: 120, }}>
-            3-1번 이슈
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-1번 이슈
           </div>
-        </div>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'violet', height: 120, }}>
-            3-1번 이슈
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-2번 이슈
           </div>
-        </div>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'violet', height: 120, }}>
-            3-1번 이슈
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-1번 이슈
           </div>
-        </div>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'violet', height: 120, }}>
-            3-1번 이슈
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-2번 이슈
           </div>
-        </div>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'violet', height: 120, }}>
-            3-1번 이슈
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-1번 이슈
           </div>
-        </div>
-        <div style={{ minWidth: 260, backgroundColor: 'gainsboro' }}>
-          <div style={{ backgroundColor: 'violet', height: 120, }}>
-            3-1번 이슈
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-2번 이슈
+          </div>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-1번 이슈
+          </div>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-2번 이슈
+          </div>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-1번 이슈
+          </div>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-2번 이슈
+          </div>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-1번 이슈
+          </div>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-2번 이슈
+          </div>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-1번 이슈
+          </div>
+            <div style={{ backgroundColor: 'gray', height: 120, }}>
+              1-2번 이슈
+          </div>
           </div>
         </div>
       </div>
-
     </div>
   );
 }
