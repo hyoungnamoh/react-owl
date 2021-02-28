@@ -10,14 +10,21 @@ const KanbanBoard = () => {
   const renderColumn = () => {
     return KanbanBoardDummyData.map(column => {
       return (
-        <div style={{ backgroundColor: 'gainsboro', display: 'flex', minWidth: 260, flexDirection: 'column' }}>
-          <div style={{ backgroundColor: 'honeydew', minHeight: 50, maxHeight: 50 }}>
+        <div style={{
+          display: 'flex',
+          minWidth: 260,
+          flexDirection: 'column',
+          padding: 5,
+          margin: 5,
+          backgroundColor: 'rgb(244, 245, 247)',
+        }}>
+          <div style={{ minHeight: 50, maxHeight: 50 }}>
             {column[0].belongTo} {column.length} Issues
           </div>
-          <div style={{ backgroundColor: 'gainsboro' }}>
+          <div style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
             {column.map(item => {
               return (
-                <div style={{ backgroundColor: 'gray', minHeight: 120 }}>
+                <div style={{ minHeight: 120, backgroundColor: '#ffffff', display: 'flex', marginBottom: '5%' }}>
                   {item.content}
                 </div>
               )
@@ -139,7 +146,7 @@ const KanbanBoard = () => {
     )
   }
   return (
-    <div style={{ overflowY: 'hidden' }}>
+    <>
       <div className={styles.header}>
         <div className={styles.selectViewTypeButtonContainer}>
           <div className={styles.selectViewTypeButtonWrapper} style={{ marginRight: 20 }} >
@@ -173,10 +180,10 @@ const KanbanBoard = () => {
           </div>
         </div>
       </div>
-      <div style={{ backgroundColor: 'gold', display: 'flex', flexDirection: 'row', width: '100%', height: '82vh', overflow: 'scroll' }}>
+      <div style={{ backgroundColor: 'gold', display: 'flex', flexDirection: 'row', width: '100%', height: '100%', overflowY: 'scroll' }}>
         {renderColumn()}
       </div>
-    </div>
+    </>
   );
 }
 
