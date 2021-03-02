@@ -121,3 +121,5 @@ interface KanbanBoardDummyDataItem {
   content: string,
   id: string,
 }
+
+type KanbanSearchOption = 'Content' | 'Label' | 'Assignee' | 'Priority';

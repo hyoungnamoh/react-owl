@@ -1,3 +1,10 @@
+export const kanbanSearchOptionDummyData: KanbanSearchOption[] = [
+  'Content',
+  'Label',
+  'Assignee',
+  'Priority',
+]
+
 export const KanbanBoardDummyData: KanbanBoardDummyDataItem[][] = [
   [
     {

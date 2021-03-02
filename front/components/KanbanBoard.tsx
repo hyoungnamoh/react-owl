@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import styles from '../styles/KanbanBoard.module.scss';
-import { FaList, FaThLarge } from 'react-icons/fa';
-import { KanbanBoardDummyData } from '../DummyData';
+import { FaList, FaThLarge, FaPlus } from 'react-icons/fa';
+import { KanbanBoardDummyData, kanbanSearchOptionDummyData } from '../DummyData';
 const KanbanBoard = () => {
+  const [searchOption, setSearchOption] = useState<KanbanSearchOption>('Content')
   useEffect(() => {
 
   });
@@ -10,26 +11,6 @@ const KanbanBoard = () => {
   const renderColumn = () => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', position: 'absolute' }}>
-          {
-            KanbanBoardDummyData.map(title => {
-              return (
-                <div style={{
-                  display: 'flex',
-                  minWidth: 240,
-                  maxWidth: 240,
-                  height: 40,
-                  padding: 5,
-                  margin: 5,
-                  backgroundColor: 'rgb(244, 245, 247)',
-                  alignItems: 'center',
-                }}>
-                  {title[0].belongTo} {title.length} Issues
-                </div >
-              )
-            })
-          }
-        </div>
         <div style={{ display: 'flex' }}>
           {
             KanbanBoardDummyData.map(column => {
@@ -39,13 +20,14 @@ const KanbanBoard = () => {
                   minWidth: 240,
                   maxWidth: 240,
                   padding: 5,
-                  margin: 5,
+                  marginTop: 15,
+                  marginRight: 10,
                   backgroundColor: 'rgb(244, 245, 247)',
                 }}>
                   <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
                     {column.map(item => {
                       return (
-                        <div style={{ backgroundColor: '#ffffff', marginBottom: '5%', flexDirection: 'column', justifyContent: 'space-between', display: 'flex', padding: 10 }}>
+                        <div className={styles.issueWrapper} >
                           <div style={{ minHeight: 75 }}>
                             {item.content}
                           </div>
@@ -55,6 +37,9 @@ const KanbanBoard = () => {
                         </div>
                       )
                     })}
+                    <div className={styles.createIssueButton}>
+                      <FaPlus size={12} /><div style={{ marginLeft: 10 }}>Create issue</div>
+                    </div>
                   </div>
                 </div >
               )
@@ -64,6 +49,11 @@ const KanbanBoard = () => {
       </div>
     )
   }
+
+  const onChangeShowEntry = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    setSearchOption(e.target.value);
+  }, [searchOption]);
+
   return (
     <>
       <div className={styles.header}>
@@ -75,31 +65,62 @@ const KanbanBoard = () => {
             <FaThLarge color={'#326295'} className={styles.selectViewTypeButton} />
           </div>
         </div>
-        <div className={styles.headerButton}>
-          Open
-        </div>
-        <div className={styles.headerButton}>
-          Closed
-        </div>
-        <div className={styles.headerButton}>
-          New Issue
-        </div>
-        <div className={styles.headerButton}>
-          New Column
-        </div>
-        <div className={styles.headerButton}>
-          Make Label
-        </div>
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+          <div style={{ display: 'flex' }}>
+            <div className={styles.headerButton}>
+              Open
+            </div>
+            <div className={styles.headerButton}>
+              Closed
+            </div>
+            <div className={styles.headerButton}>
+              New Issue
+            </div>
+            <div className={styles.headerButton}>
+              New Column
+            </div>
+            <div className={styles.headerButton}>
+              Make Label
+            </div>
+          </div>
           <div>
-            셀렉트 버튼
-        </div>
-          <div>
-            검색바
+            <div>
+              <select value={searchOption} onChange={onChangeShowEntry} className={styles.showEntrySelectBox}>
+                {
+                  kanbanSearchOptionDummyData.map(e => {
+                    return <option label={e} value={e} />;
+                  })
+                }
+              </select>
+            </div>
+            <div>
+              검색바
+            </div>
           </div>
         </div>
       </div>
-      <div style={{ backgroundColor: 'gold', width: '100%', height: '78vh', overflowY: 'scroll' }}>
+      <div style={{ display: 'flex', marginTop: 20 }}>
+        {
+          KanbanBoardDummyData.map(title => {
+            return (
+              <div style={{
+                display: 'flex',
+                minWidth: 240,
+                maxWidth: 240,
+                height: 40,
+                padding: 5,
+                marginTop: 5,
+                marginRight: 10,
+                backgroundColor: 'rgb(244, 245, 247)',
+                alignItems: 'center',
+              }}>
+                {title[0].belongTo} {title.length} Issues
+              </div >
+            )
+          })
+        }
+      </div>
+      <div style={{ width: '79vw', height: '70vh', overflowY: 'scroll' }}>
         {renderColumn()}
       </div>
     </>

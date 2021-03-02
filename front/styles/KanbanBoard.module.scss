@@ -45,3 +45,29 @@
 .selectViewTypeButtonWrapper :hover {
   cursor: pointer;
 }
+
+.createIssueButton {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+.createIssueButton:hover {
+  background-color: rgb(9, 30, 66, 0.08);
+}
+
+.issueWrapper {
+  background-color: #ffffff;
+   margin-bottom: 5px;
+   flex-direction: column;
+   justify-content: space-between;
+   display: flex;
+   padding: 10px;
+}
+
+.issueWrapper:hover {
+  background-color: rgb(9, 30, 66, 0.05);
+  color: rgb(23, 43, 77);
+  cursor: pointer;
+}
