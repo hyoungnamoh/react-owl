@@ -119,4 +119,5 @@ interface KanbanBoardDummyDataItem {
   belongTo: string,
   index: number,
   content: string,
+  id: string,
 }

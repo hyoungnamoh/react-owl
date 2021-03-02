@@ -35,6 +35,7 @@ const LogInPage = () => {
   useEffect(() => {
 
   }, []);
+  
   const onChangeEmail = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   }, [email]);

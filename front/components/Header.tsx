@@ -5,6 +5,17 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { userStore } from '../store';
 import { useObserver } from 'mobx-react';
+
+const dummyUser: User = {
+  email: 'zzzsh789@naver.com',
+  password: '1234',
+  enabled: true,
+  name: '오형남',
+  profilePic: null,
+  signFrom: 'owl',
+  authOk: true,
+};
+
 const Header = () => {
   const router = useRouter()
 
@@ -28,6 +39,12 @@ const Header = () => {
 
   const getWrapperStyle = (): React.CSSProperties => {
     return userStore.data ? { backgroundColor: '#326295' } : {};
+  }
+
+  const onClickLogin = (e: React.MouseEvent) => {
+    e.preventDefault();
+    userStore.logIn(dummyUser);
+    router.push('/home');
   }
   return useObserver(() => (
     <>
@@ -54,6 +71,9 @@ const Header = () => {
             <div className={styles.moveLoginPageButtonContainer}>
               <button className={styles.moveLoginPageButton} onClick={moveLoginPage}>
                 <p className={styles.moveLoginPageButtonText}>Login / Register</p>
+              </button>
+              <button className={styles.moveLoginPageButton} onClick={onClickLogin}>
+                <p className={styles.moveLoginPageButtonText}>TEST</p>
               </button>
             </div>
         }
