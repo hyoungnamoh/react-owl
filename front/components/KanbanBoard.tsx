@@ -3,10 +3,19 @@ import styles from '../styles/KanbanBoard.module.scss';
 import { FaList, FaThLarge, FaPlus } from 'react-icons/fa';
 import { KanbanBoardDummyData, kanbanSearchOptionDummyData } from '../DummyData';
 const KanbanBoard = () => {
-  const [searchOption, setSearchOption] = useState<KanbanSearchOption>('Content')
+  const [searchOption, setSearchOption] = useState<KanbanSearchOption>('Content');
+  const [searchValue, setSearchValue] = useState<string>('');
   useEffect(() => {
 
   });
+
+  const onChangeShowEntry = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    setSearchOption(e.target.value as KanbanSearchOption);
+  }, [searchOption]);
+
+  const onChangeSearchValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  }, [searchValue]);
 
   const renderColumn = () => {
     return (
@@ -50,10 +59,6 @@ const KanbanBoard = () => {
     )
   }
 
-  const onChangeShowEntry = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
-    setSearchOption(e.target.value);
-  }, [searchOption]);
-
   return (
     <>
       <div className={styles.header}>
@@ -84,18 +89,14 @@ const KanbanBoard = () => {
             </div>
           </div>
           <div>
-            <div>
-              <select value={searchOption} onChange={onChangeShowEntry} className={styles.showEntrySelectBox}>
-                {
-                  kanbanSearchOptionDummyData.map(e => {
-                    return <option label={e} value={e} />;
-                  })
-                }
-              </select>
-            </div>
-            <div>
-              검색바
-            </div>
+            <select value={searchOption} onChange={onChangeShowEntry} className={styles.searchOption}>
+              {
+                kanbanSearchOptionDummyData.map(e => {
+                  return <option label={e} value={e} />;
+                })
+              }
+            </select>
+            <input value={searchValue} onChange={onChangeSearchValue} className={styles.searchInput} />
           </div>
         </div>
       </div>
