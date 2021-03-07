@@ -1,10 +1,11 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, DragEvent, useCallback, useEffect, useState } from 'react';
 import styles from '../styles/KanbanBoard.module.scss';
 import { FaList, FaThLarge, FaPlus } from 'react-icons/fa';
 import { KanbanBoardDummyData, kanbanSearchOptionDummyData } from '../DummyData';
 const KanbanBoard = () => {
   const [searchOption, setSearchOption] = useState<KanbanSearchOption>('Content');
   const [searchValue, setSearchValue] = useState<string>('');
+
   useEffect(() => {
 
   });
@@ -16,6 +17,24 @@ const KanbanBoard = () => {
   const onChangeSearchValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   }, [searchValue]);
+
+  const onDragStart = useCallback((e: DragEvent<HTMLDivElement>) => {
+    const id = (e.target as HTMLDivElement).id;
+    e.dataTransfer.dropEffect = "copy";
+    console.log(id, '?');
+  }, []);
+
+  const onDragOver = useCallback((e: DragEvent<HTMLDivElement>) => {
+    const id = (e.target as HTMLDivElement).id;
+    e.dataTransfer.dropEffect = "copy";
+    console.log(id, '?');
+  }, []);
+
+  const onDrop = useCallback((e: DragEvent<HTMLDivElement>) => {
+    const id = (e.target as HTMLDivElement).id;
+    e.dataTransfer.dropEffect = "copy";
+    console.log(id, '?');
+  }, []);
 
   const renderColumn = () => {
     return (
@@ -33,19 +52,24 @@ const KanbanBoard = () => {
                   marginRight: 10,
                   backgroundColor: 'rgb(244, 245, 247)',
                 }}>
-                  <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                    {column.map(item => {
-                      return (
-                        <div className={styles.issueWrapper} >
-                          <div style={{ minHeight: 75 }}>
-                            {item.content}
+                  <div
+                    onDragOver={(e) => onDragOver(e)}
+                    onDrop={(e) => onDrop(e)}
+                    style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} >
+                    {
+                      column.map(item => {
+                        return (
+                          <div className={styles.issueWrapper} onDragStart={onDragStart} draggable={true}>
+                            <div className={styles.unselected} style={{ minHeight: 75 }}>
+                              {item.content}
+                            </div>
+                            <div className={styles.unselected} style={{ minHeight: 15, marginTop: 10 }}>
+                              {item.id}
+                            </div>
                           </div>
-                          <div style={{ minHeight: 15, marginTop: 10 }}>
-                            {item.id}
-                          </div>
-                        </div>
-                      )
-                    })}
+                        )
+                      })
+                    }
                     <div className={styles.createIssueButton}>
                       <FaPlus size={12} /><div style={{ marginLeft: 10 }}>Create issue</div>
                     </div>
