@@ -1,127 +1,71 @@
-import React, { Component } from 'react';
-import styles from '../styles/test.module.scss';
+const _SocialNetworks = [
+  { title: "Twitter", color: "white", backgroundColor: "Red" },
+  { title: "Facebook", color: "black", backgroundColor: "Orange" },
+  { title: "Line", color: "black", backgroundColor: "Yellow" },
+  { title: "Instagram", color: "white", backgroundColor: "Green" },
+  { title: "Telegram", color: "white", backgroundColor: "Blue" },
+  { title: "KaKao", color: "white", backgroundColor: "DarkBlue" },
+  { title: "LinkedIn", color: "white", backgroundColor: "Purple" },
+]
 
-let cOffX = 0;
-let cOffY = 0;
+const Test = () => {
+  const [lists, setLists] = React.useState(_SocialNetworks);
+  const [grab, setGrab] = React.useState(null)
 
-export default class AppDragDropDemo extends Component {
-  state = {
-    tasks: [
-      { name: "Learn Angular", category: "wip", bgcolor: "yellow" },
-      { name: "React", category: "wip", bgcolor: "pink" },
-      { name: "Vue", category: "complete", bgcolor: "skyblue" }
-    ],
-    onDragStyle: { backgroundColor: 'red' },
-  }
-  itemRef = null;
-
-  dragStart = (e) => {
-    cOffX = this.itemRef.offsetLeft;
-    cOffY = this.itemRef.offsetTop;
-    console.log(cOffX, cOffY);
-    // ev.dataTransfer.setData("id", id);
-    // console.log(e.clientX - this.el.offsetLef/t, e.clientX - this.el.offsetTop);
-
-    // document.addEventListener('mousemove', this.dragMove);
-    // document.addEventListener('mouseup', this.dragEnd);
-
-    // this.el.classList.add(d);
-    // this.container.style.cursor = 'move';
-  };
-
-  dragMove = (e) => {
-    console.log('dragOn')
-    e.persist();
-    this.setState({
-      onDragStyle: {
-        backgroundColor: 'red',
-        position: 'absolute',
-        top: e.clientY - cOffY,
-        left: e.clientX - cOffX,
-      }
-    })
-  };
-
-  dragEnd = (e) => {
-    e = e || window.event;
+  const _onDragOver = e => {
     e.preventDefault();
-
-    // document.removeEventListener('mousemove', this.dragMove);
-    // document.removeEventListener('mouseup', this.dragEnd);
-
-    // this.el.classList.remove(d);
-    // this.container.style.cursor = null;
-  };
-
-  onDragStart = (ev, id) => {
-    console.log('dragstart:', id);
-    ev.dataTransfer.setData("id", id);
-    console.log(ev);
   }
 
-  onDragOver = (ev) => {
-    ev.preventDefault();
+  const _onDragStart = e => {
+    setGrab(e.target);
+    e.target.classList.add("grabbing");
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", e.target);
   }
 
-  onDrop = (ev, cat) => {
-    let id = ev.dataTransfer.getData("id");
+  const _onDragEnd = e => {
+    e.target.classList.remove("grabbing");
 
-    let tasks = this.state.tasks.filter((task) => {
-      if (task.name == id) {
-        task.category = cat;
-      }
-      return task;
-    });
-
-    this.setState({
-      ...this.state,
-      tasks
-    });
+    e.dataTransfer.dropEffect = "move";
   }
 
-  render() {
-    var tasks = {
-      wip: [],
-      complete: []
-    }
+  const _onDrop = e => { // e = 떨군 위치의 element
+    console.log(e.target);
+    let grabPosition = Number(grab.dataset.position);
+    let targetPosition = Number(e.target.dataset.position);
 
-    this.state.tasks.forEach((t) => {
-      tasks[t.category].push(
-        <div key={t.name}
-          onDragStart={(e) => this.onDragStart(e, t.name)}
-          draggable
-          className={styles.draggable}
-          style={this.state.onDragStyle}
-        >
-          {t.name}
-        </div>
-      );
-    });
+    let _list = [...lists];
+    _list[grabPosition] = _list.splice(targetPosition, 1, _list[grabPosition])[0];
 
-    return (
-      <div className={styles.containerdrag}>
-        <h2 className={styles.header}>DRAG & DROP DEMO</h2>
-        <div className={styles.wip}
-          onDragOver={(e) => this.dragMove(e)}
-          onDrop={(e) => { this.onDrop(e, "wip") }}>
-          <span className={styles.taskheader}>WIP</span>
-          <div
-            onDragStart={(e) => this.dragStart(e)}
-            draggable
-            className={styles.draggable}
-            style={this.state.onDragStyle}
-            ref={(ref) => this.itemRef = ref}
-          >
-            Hi
-          </div>
-        </div>
-        <div className={styles.droppable}
-          onDragOver={(e) => this.dragMove(e)}
-          onDrop={(e) => this.onDrop(e, "complete")}>
-          <span className={styles.taskheader}>COMPLETED</span>
-          {/* {tasks.complete} */}
-        </div>
-      </div>
-    );
+    setLists(_list);
   }
+
+  return (
+    <div className='App'>
+      <ul className='List'>
+        {
+          lists.map((sns, index) => (
+            <li
+              key={index}
+              data-position={index}
+              onDragOver={_onDragOver}
+              onDragStart={_onDragStart}
+              onDragEnd={_onDragEnd}
+              onDrop={_onDrop}
+              draggable
+              style={{
+                backgroundColor: sns.backgroundColor,
+                color: sns.color,
+                fontSize: "bold"
+              }}
+            >
+              {sns.title}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  )
 }
+
+export default Test;
