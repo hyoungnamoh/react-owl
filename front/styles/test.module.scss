@@ -14,7 +14,7 @@
   height: 100vh;
   left: 0;
   top: 10;
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   border-right: 1px dotted;
 }
 
@@ -22,14 +22,14 @@
   display: inline-block;
   margin: 0;
   padding: 0;
-  background-color: #E0E0E0;
-  width:100%;
+  background-color: #e0e0e0;
+  width: 100%;
 }
 
 .taskheader {
   display: inline-block;
   background-color: skyblue;
-  width:100%;
+  width: 100%;
 }
 
 .droppable {
@@ -38,7 +38,7 @@
   height: 100vh;
   right: 0;
   top: 10;
-  background-color: #9E9E9E;
+  background-color: #9e9e9e;
   border-left: 1px dotted;
 }
 
@@ -48,4 +48,21 @@
   background-color: yellow;
   margin: 5px auto;
   line-height: 5em;
+}
+
+.issue {
+  cursor: grab;
+  transition: transform 200ms ease 0s;
+}
+.grabbing {
+  cursor: grabbing;
+}
+
+.move_up {
+  background-color: yellowgreen;
+  transform: translate(0, -60px);
+}
+
+.move_down {
+  transform: translate(0, 60px);
 }
