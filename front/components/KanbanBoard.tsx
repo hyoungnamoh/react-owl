@@ -5,10 +5,96 @@ import { KanbanBoardDummyData, kanbanSearchOptionDummyData } from '../DummyData'
 const KanbanBoard = () => {
   const [searchOption, setSearchOption] = useState<KanbanSearchOption>('Content');
   const [searchValue, setSearchValue] = useState<string>('');
+  const [kanbanList, setKanbanList] = useState<KanbanBoardDummyDataItem[][]>(KanbanBoardDummyData);
+  const [dragData, setDragData] = useState<DragData>({
+    target: null,
+    index: -1,
+    columnIndex: -1,
+    move_down: [],
+    move_up: [],
+    updateLists: []
+  });
+  const [isDragged, setIsDragged] = useState<Boolean>(false)
 
   useEffect(() => {
 
   });
+
+  const _onDragOver = (e: DragEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    return true;
+  }
+
+  const _onDragStart = (e: DragEvent) => {
+    setIsDragged(true);
+    setDragData({
+      ...dragData,
+      target: e.currentTarget,
+      index: Number(e.currentTarget.getAttribute('data-index')),
+      columnIndex: Number(e.currentTarget.getAttribute('data-column')),
+      updateLists: [...kanbanList]
+    });
+
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/html", String(e.target));
+  }
+
+  const _onDragEnter = (e: DragEvent) => {
+    const _dragged: number[] = [Number(dragData.target.dataset.column), Number(dragData.target.dataset.index)];
+    const _index: number[] = [Number(dragData.columnIndex), Number(dragData.index)];
+    const _target: number[] = [Number(e.currentTarget.getAttribute('data-column')), Number(e.currentTarget.getAttribute('data-index'))];
+    let move_down: number[] = [...dragData.move_down];
+    let move_up: number[] = [...dragData.move_up];
+
+    let data = [...dragData.updateLists];
+    const tamp = data[_index[0]][_target[1]];
+    data[_index[0]].splice(_target[1], 1, data[_index[0]][_index[1]]);
+    data[_index[0]][_index[1]] = tamp;
+    console.log(data);
+
+    if (_dragged[1] > _target[1]) {
+      move_down.includes(_target[1]) ? move_down.pop() : move_down.push(_target[1]);
+    } else if (_dragged[1] < _target[1]) { // ??
+      move_up.includes(_target[_target[1]]) ? move_up.pop() : move_up.push(_target[1]);
+    } else {
+      move_down = [];
+      move_up = [];
+    }
+
+    setDragData({
+      ...dragData,
+      updateLists: data,
+      index: _target[1],
+      columnIndex: _target[0],
+      move_up,
+      move_down
+    })
+  }
+
+  const _onDragLeave = (e: DragEvent) => {
+    // if (e.target === dragData.target) {
+    //   e.curr.style.visibility = "hidden";
+    // }
+  }
+
+  const _onDragEnd = (e: DragEvent) => {
+    setIsDragged(false);
+    // e.target.classList.remove("grabbing");
+    setKanbanList([
+      ...dragData.updateLists
+    ]);
+
+    setDragData({
+      ...dragData,
+      move_down: [],
+      move_up: [],
+      updateLists: [],
+    });
+
+    // e.target.style.visibility = "visible";
+    e.dataTransfer.dropEffect = 'move';
+  }
 
   const onChangeShowEntry = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     setSearchOption(e.target.value as KanbanSearchOption);
@@ -18,30 +104,13 @@ const KanbanBoard = () => {
     setSearchValue(e.target.value);
   }, [searchValue]);
 
-  const onDragStart = useCallback((e: DragEvent<HTMLDivElement>) => {
-    const id = (e.target as HTMLDivElement).id;
-    e.dataTransfer.dropEffect = "copy";
-    console.log(id, '?');
-  }, []);
-
-  const onDragOver = useCallback((e: DragEvent<HTMLDivElement>) => {
-    const id = (e.target as HTMLDivElement).id;
-    e.dataTransfer.dropEffect = "copy";
-    console.log(id, '?');
-  }, []);
-
-  const onDrop = useCallback((e: DragEvent<HTMLDivElement>) => {
-    const id = (e.target as HTMLDivElement).id;
-    e.dataTransfer.dropEffect = "copy";
-    console.log(id, '?');
-  }, []);
 
   const renderColumn = () => {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ display: 'flex' }}>
           {
-            KanbanBoardDummyData.map(column => {
+            kanbanList.map((column, columnIndex) => {
               return (
                 <div style={{
                   display: 'flex',
@@ -53,13 +122,25 @@ const KanbanBoard = () => {
                   backgroundColor: 'rgb(244, 245, 247)',
                 }}>
                   <div
-                    onDragOver={(e) => onDragOver(e)}
-                    onDrop={(e) => onDrop(e)}
                     style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} >
                     {
-                      column.map(item => {
+                      column.map((item, index) => {
+                        let classNames = "";
+                        dragData.move_up.includes(index) && (classNames = styles.move_up);
+                        dragData.move_down.includes(index) && (classNames = styles.move_down);
                         return (
-                          <div className={styles.issueWrapper} onDragStart={onDragStart} draggable={true}>
+                          <div
+                            draggable
+                            className={`${styles.issueWrapper} ${classNames} ${isDragged ? styles.issue : null}`}
+                            key={index}
+                            data-column={columnIndex}
+                            data-index={index}
+                            onDragOver={_onDragOver}
+                            onDragStart={_onDragStart}
+                            onDragEnd={_onDragEnd}
+                            onDragEnter={_onDragEnter}
+                            onDragLeave={_onDragLeave}
+                          >
                             <div className={styles.unselected} style={{ minHeight: 75 }}>
                               {item.content}
                             </div>
@@ -82,7 +163,6 @@ const KanbanBoard = () => {
       </div>
     )
   }
-
   return (
     <>
       <div className={styles.header}>

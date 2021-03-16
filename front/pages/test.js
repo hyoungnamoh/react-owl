@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import styles from '../styles/test.module.scss';
 const data = [
   {
@@ -28,113 +29,162 @@ const data = [
 
 const _initGrabData = {
   target: null,
-  position: null,
-  move_up: [],
+  index: -1,
   move_down: [],
-  updateList: []
+  move_up: [],
+  updateLists: []
 }
 
 const Test = () => {
-  const [lists, setLists] = React.useState(data);
-  const [grab, setGrab] = React.useState(_initGrabData);
-  const [isDrag, setIsDrag] = React.useState(false);
+  const [lists, setLists] = useState(data);
+  const [dragData, setDragData] = useState(_initGrabData);
+  const [isDragged, setIsDragged] = useState(false)
 
-  const _onDragOver = e => { e.preventDefault(); }
+  const _onDragOver = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    return true
+  }
 
   const _onDragStart = e => {
-    setIsDrag(true);
-    setGrab({
-      ...grab,
+    setIsDragged(true);
+    setDragData({
+      ...dragData,
       target: e.target,
-      position: Number(e.target.dataset.position),
-      updateList: [...lists]
+      index: Number(e.target.dataset.index),
+      updateLists: [...lists]
     });
 
-    e.target.classList.add("grabbing");
+    // e.target.classList.add("grabbing");
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/html", e.target);
   }
 
   const _onDragEnter = e => {
-    let grabPosition = Number(grab.target.dataset.position); // 잡아 놓은 타겟의 위치값
-    let listPosition = grab.position; // updateList에서 선택된 타겟의 위치값
-    let targetPosition = Number(e.target.dataset.position); // 떨구는 곳 타겟의 위치값
+    const _dragged = Number(dragData.target.dataset.index);
+    const _index = Number(dragData.index);
+    const _target = Number(e.target.dataset.index);
+    let move_down = [...dragData.move_down];
+    let move_up = [...dragData.move_up];
 
-    let move_up = [...grab.move_up];
-    let move_down = [...grab.move_down];
-    let data = [...grab.updateList];
+    let data = [...dragData.updateLists];
+    data[_index] = data.splice(_target, 1, data[_index])[0];
 
-
-    if (grabPosition > targetPosition) { //떨구려는 애가 떨궈지려는 애보다 크면 밑으로
-      move_down.includes(targetPosition) ? move_down.filter(e => e === targetPosition) : move_down.push(targetPosition);
-    }
-    if (grabPosition < targetPosition) {
-      move_up.includes(targetPosition) ? move_up.filter(e => e === targetPosition) : move_up.push(targetPosition);
-    }
-    if (grabPosition === targetPosition) {
-      move_up = [];
+    if (_dragged > _target) {
+      move_down.includes(_target) ? move_down.pop() : move_down.push(_target);
+    } else if (_dragged < _target) {
+      move_up.includes(_target) ? move_up.pop() : move_up.push(_target);
+    } else {
       move_down = [];
+      move_up = [];
     }
-    console.log(move_up, move_down);
-    data[grabPosition] = data.splice(targetPosition, 1, data[grabPosition])[0];
-    // if (listPosition > targetPosition) {
-    //   move_down.includes(targetPosition) ? move_down.pop() : move_down.push(targetPosition);
-    // } else if (listPosition < targetPosition) {
-    //   move_up.includes(targetPosition) ? move_up.pop() : move_up.push(targetPosition);
-    // } else {
-    //   move_down = [];
-    //   move_up = [];
-    // }
 
-    setGrab({
-      ...grab,
+    setDragData({
+      ...dragData,
+      updateLists: data,
+      index: _target,
       move_up,
-      move_down,
-      updateList: data,
-      position: targetPosition
+      move_down
     })
+
+
+    // let move_up = [...grab.move_up];
+    // let move_down = [...grab.move_down];
+    // let listData = [...grabedList];
+    // let targetPosition = Number(e.target.dataset.position);
+    // let grabPosition = Number(grab.position);
+    // if (grabPosition < targetPosition) {
+    //   move_down.includes(targetPosition) ? move_down.pop() : move_up.push(targetPosition);
+    // }
+    // if (grabPosition > targetPosition) {
+    //   move_up.includes(targetPosition) ? move_up.pop() : move_down.push(targetPosition);
+    // }
+    // if (grabPosition === targetPosition) {
+    //   console.log('hi');
+    //   move_up.length === 0 ? move_down.pop() : move_up.pop();
+    // }
+    // const temp = listData[grabPosition];
+    // listData[grabPosition] = listData[targetPosition];
+    // listData[targetPosition] = temp;
+    // // 올라갔다 내려오면 무브업이 비어있음
+    // console.log(move_up, move_down);
+
+    // setGrabedList(listData);
+    // setGrab({ ...grab, position: targetPosition, move_up, move_down });
+
+
+
+
+
+
+
+
+
+
+
+
+    //   let move_up = [...grab.move_up];
+    //   let move_down = [...grab.move_down];
+    //   let listData = [...grab.updateList];
+    //   let grabPosition = Number(grab.target.dataset.position); // 잡아 놓은 타겟의 위치값
+    //   let targetPosition = Number(e.target.dataset.position); // 떨구는 곳 타겟의 위치값
+    //   let listGrabPosition = Number(grab.position);
+    //   listData[targetPosition] = listData.splice(listGrabPosition, 1, listData[listGrabPosition])[0];
+    //   console.log('hi', listData[0]);
+
+
+    //   setGrab({
+    //     ...grab,
+    //     move_up,
+    //     move_down,
+    //     updateList: listData,
+    //     position: listGrabPosition,
+    //   });
   }
 
   const _onDragLeave = e => {
-    if (e.target === grab.target) {
+    if (e.target === dragData.target) {
       e.target.style.visibility = "hidden";
     }
   }
 
   const _onDragEnd = e => {
-    setIsDrag(false);
-    e.target.classList.remove("grabbing");
-    e.dataTransfer.dropEffect = "move";
+    setIsDragged(false);
+    // e.target.classList.remove("grabbing");
+    setLists([
+      ...dragData.updateLists
+    ]);
 
-    setLists([...grab.updateList]);
-
-    setGrab({
-      target: null,
-      move_up: [],
+    setDragData({
+      ...dragData,
       move_down: [],
-      updateList: []
+      move_up: [],
+      updateLists: [],
     });
 
     e.target.style.visibility = "visible";
+    e.dataTransfer.dropEffect = 'move';
   }
+
   return (
     <div style={{ width: 200, display: 'flex', flexDirection: 'column' }} onDragOver={_onDragOver} >
       {
         lists.map((issue, index) => {
-          let classNames = ""
-          grab.move_up.includes(index) && (classNames = styles.move_up)
-          grab.move_down.includes(index) && (classNames = styles.move_down)
+          console.log(issue);
+          let classNames = "";
+          dragData.move_up.includes(index) && (classNames = styles.move_up);
+          dragData.move_down.includes(index) && (classNames = styles.move_down);
           return (
             <div
               key={index}
-              data-position={index}
+              data-index={index}
               onDragOver={_onDragOver}
               onDragStart={_onDragStart}
               onDragEnd={_onDragEnd}
               onDragEnter={_onDragEnter}
               onDragLeave={_onDragLeave}
               draggable
-              className={`${classNames} ${isDrag ? styles.issue : null}`}
+              className={`${classNames} ${isDragged ? styles.issue : null}`}
               style={{
                 borderWidth: 1,
                 borderColor: 'black',

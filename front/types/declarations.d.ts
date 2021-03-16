@@ -122,4 +122,13 @@ interface KanbanBoardDummyDataItem {
   id: string,
 }
 
+interface DragData {
+  target: BaseSyntheticEvent,
+  index: number,
+  columnIndex: number,
+  move_down: number[],
+  move_up: number[],
+  updateLists: any[],
+}
+
 type KanbanSearchOption = 'Content' | 'Label' | 'Assignee' | 'Priority';

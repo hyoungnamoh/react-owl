@@ -122,3 +122,16 @@
   user-select: none;
 }
 
+.issue {
+  cursor: grab;
+  transition: transform 200ms ease 0s;
+}
+
+.move_up {
+  background-color: yellowgreen;
+  transform: translate(0, -60px);
+}
+
+.move_down {
+  transform: translate(0, 60px);
+}
