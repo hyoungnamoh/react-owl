@@ -131,4 +131,17 @@ interface DragData {
   updateLists: any[],
 }
 
+interface IssueProps {
+  dragData: DragData,
+  columnIndex: number,
+  index: number,
+  isDragged: boolean,
+  _onDragOver: DragEventHandler<T>,
+  _onDragStart: DragEventHandler<T>,
+  _onDragEnd: DragEventHandler<T>,
+  _onDragEnter: DragEventHandler<T>,
+  _onDragLeave: DragEventHandler<T>,
+  item: KanbanBoardDummyDataItem,
+}
+
 type KanbanSearchOption = 'Content' | 'Label' | 'Assignee' | 'Priority';

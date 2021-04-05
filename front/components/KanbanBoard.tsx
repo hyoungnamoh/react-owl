@@ -2,6 +2,7 @@ import React, { ChangeEvent, DragEvent, useCallback, useEffect, useState } from 
 import styles from '../styles/KanbanBoard.module.scss';
 import { FaList, FaThLarge, FaPlus } from 'react-icons/fa';
 import { KanbanBoardDummyData, kanbanSearchOptionDummyData } from '../DummyData';
+import Issue from './Issue';
 const KanbanBoard = () => {
   const [searchOption, setSearchOption] = useState<KanbanSearchOption>('Content');
   const [searchValue, setSearchValue] = useState<string>('');
@@ -14,7 +15,7 @@ const KanbanBoard = () => {
     move_up: [],
     updateLists: []
   });
-  const [isDragged, setIsDragged] = useState<Boolean>(false)
+  const [isDragged, setIsDragged] = useState<boolean>(false)
 
   useEffect(() => {
 
@@ -51,7 +52,6 @@ const KanbanBoard = () => {
     const tamp = data[_index[0]][_target[1]];
     data[_index[0]].splice(_target[1], 1, data[_index[0]][_index[1]]);
     data[_index[0]][_index[1]] = tamp;
-    console.log(data);
 
     if (_dragged[1] > _target[1]) {
       move_down.includes(_target[1]) ? move_down.pop() : move_down.push(_target[1]);
@@ -74,7 +74,7 @@ const KanbanBoard = () => {
 
   const _onDragLeave = (e: DragEvent) => {
     // if (e.target === dragData.target) {
-    //   e.curr.style.visibility = "hidden";
+    //   e.currentTarget.style.visibility = "hidden";
     // }
   }
 
@@ -125,30 +125,7 @@ const KanbanBoard = () => {
                     style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} >
                     {
                       column.map((item, index) => {
-                        let classNames = "";
-                        dragData.move_up.includes(index) && (classNames = styles.move_up);
-                        dragData.move_down.includes(index) && (classNames = styles.move_down);
-                        return (
-                          <div
-                            draggable
-                            className={`${styles.issueWrapper} ${classNames} ${isDragged ? styles.issue : null}`}
-                            key={index}
-                            data-column={columnIndex}
-                            data-index={index}
-                            onDragOver={_onDragOver}
-                            onDragStart={_onDragStart}
-                            onDragEnd={_onDragEnd}
-                            onDragEnter={_onDragEnter}
-                            onDragLeave={_onDragLeave}
-                          >
-                            <div className={styles.unselected} style={{ minHeight: 75 }}>
-                              {item.content}
-                            </div>
-                            <div className={styles.unselected} style={{ minHeight: 15, marginTop: 10 }}>
-                              {item.id}
-                            </div>
-                          </div>
-                        )
+                        return <Issue dragData={dragData} columnIndex={columnIndex} index={index} isDragged={isDragged} _onDragOver={_onDragOver} _onDragStart={_onDragStart} _onDragEnd={_onDragEnd} _onDragEnter={_onDragEnter} _onDragLeave={_onDragLeave} item={item} />;
                       })
                     }
                     <div className={styles.createIssueButton}>
@@ -159,8 +136,8 @@ const KanbanBoard = () => {
               )
             })
           }
-        </div>
-      </div>
+        </div >
+      </div >
     )
   }
   return (

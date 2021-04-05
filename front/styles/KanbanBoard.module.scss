@@ -128,10 +128,11 @@
 }
 
 .move_up {
-  background-color: yellowgreen;
-  transform: translate(0, -60px);
+  // background-color: yellowgreen;
+  // transform: translate(0, -200px);
+  // display: none;
 }
 
 .move_down {
-  transform: translate(0, 60px);
+  // transform: translate(0, 200px);
 }
