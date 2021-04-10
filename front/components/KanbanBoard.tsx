@@ -3,6 +3,7 @@ import styles from '../styles/KanbanBoard.module.scss';
 import { FaList, FaThLarge, FaPlus } from 'react-icons/fa';
 import { KanbanBoardDummyData, kanbanSearchOptionDummyData } from '../DummyData';
 import Issue from './Issue';
+import IssueModal from './IssueModal';
 const KanbanBoard = () => {
   const [searchOption, setSearchOption] = useState<KanbanSearchOption>('Content');
   const [searchValue, setSearchValue] = useState<string>('');
@@ -15,7 +16,9 @@ const KanbanBoard = () => {
     move_up: [],
     updateLists: []
   });
-  const [isDragged, setIsDragged] = useState<boolean>(false)
+  const [isDragged, setIsDragged] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [issueId, setIssueId] = useState<number>(0)
 
   useEffect(() => {
 
@@ -47,24 +50,25 @@ const KanbanBoard = () => {
     const _target: number[] = [Number(e.currentTarget.getAttribute('data-column')), Number(e.currentTarget.getAttribute('data-index'))];
     let move_down: number[] = [...dragData.move_down];
     let move_up: number[] = [...dragData.move_up];
+    // let updateData = [...dragData.updateLists];
+    // updateData[_target[0], _target[1]] = updateData[_index[0]].splice(_index[1], 1)[0];
+    let updateData: KanbanBoardDummyDataItem[][] = [...dragData.updateLists];
+    const tamp: KanbanBoardDummyDataItem = updateData[_index[0]][_target[1]];
+    updateData[_index[0]].splice(_target[1], 1, updateData[_index[0]][_index[1]]);
+    updateData[_index[0]][_index[1]] = tamp;
 
-    let data = [...dragData.updateLists];
-    const tamp = data[_index[0]][_target[1]];
-    data[_index[0]].splice(_target[1], 1, data[_index[0]][_index[1]]);
-    data[_index[0]][_index[1]] = tamp;
-
-    if (_dragged[1] > _target[1]) {
-      move_down.includes(_target[1]) ? move_down.pop() : move_down.push(_target[1]);
-    } else if (_dragged[1] < _target[1]) { // ??
-      move_up.includes(_target[_target[1]]) ? move_up.pop() : move_up.push(_target[1]);
-    } else {
-      move_down = [];
-      move_up = [];
-    }
+    // if (_dragged[1] > _target[1]) {
+    //   move_down.includes(_target[1]) ? move_down.pop() : move_down.push(_target[1]);
+    // } else if (_dragged[1] < _target[1]) { // ??
+    //   move_up.includes(_target[_target[1]]) ? move_up.pop() : move_up.push(_target[1]);
+    // } else {
+    //   move_down = [];
+    //   move_up = [];
+    // }
 
     setDragData({
       ...dragData,
-      updateLists: data,
+      updateLists: updateData,
       index: _target[1],
       columnIndex: _target[0],
       move_up,
@@ -140,8 +144,18 @@ const KanbanBoard = () => {
       </div >
     )
   }
+
+  const onClickOpen = () => {
+    setModalVisible(true);
+  }
+
+  const onClickModalClose = () => {
+    setModalVisible(false);
+  }
+
   return (
     <>
+      <IssueModal id={issueId} visible={modalVisible} onClickModalClose={onClickModalClose} />
       <div className={styles.header}>
         <div className={styles.selectViewTypeButtonContainer}>
           <div className={styles.selectViewTypeButtonWrapper} style={{ marginRight: 20 }} >
@@ -153,7 +167,7 @@ const KanbanBoard = () => {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <div style={{ display: 'flex' }}>
-            <div className={styles.headerButton}>
+            <div className={styles.headerButton} onClick={onClickOpen}>
               Open
             </div>
             <div className={styles.headerButton}>

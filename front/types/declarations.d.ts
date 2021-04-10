@@ -128,7 +128,7 @@ interface DragData {
   columnIndex: number,
   move_down: number[],
   move_up: number[],
-  updateLists: any[],
+  updateLists: KanbanBoardDummyDataItem[][],
 }
 
 interface IssueProps {
@@ -142,6 +142,13 @@ interface IssueProps {
   _onDragEnter: DragEventHandler<T>,
   _onDragLeave: DragEventHandler<T>,
   item: KanbanBoardDummyDataItem,
+}
+
+interface IssueModalProps {
+  id: number,
+  column?: string,
+  visible: boolean,
+  onClickModalClose: () => void,
 }
 
 type KanbanSearchOption = 'Content' | 'Label' | 'Assignee' | 'Priority';

@@ -18,7 +18,6 @@ const projectDetail = () => {
   const router = useRouter();
   const { id } = router.query;
   const [onProjectSet, setOnProjectSet] = useState<boolean>(false);
-  const [noticeLits, setNoticeList] = useState<NoticeItem[]>([]);
   const [tab, setTab] = useState<TabType>('Dash Board')
   const menuRef = useRef(null);
 
@@ -50,10 +49,6 @@ const projectDetail = () => {
 
   useEffect(() => {
     document.addEventListener('click', handleClickOutside, true);
-    if (router.query.tabName === 'notice') {
-      const noticeList: NoticeItem[] = getNoticeList();
-      setNoticeList(noticeList);
-    }
     return () => {
       document.removeEventListener('click', handleClickOutside, true);
     };

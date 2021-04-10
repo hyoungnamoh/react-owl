@@ -2,7 +2,6 @@ import { FC } from "react";
 import styles from '../styles/KanbanBoard.module.scss';
 
 const Issue: FC<IssueProps> = ({ dragData, columnIndex, index, isDragged, _onDragOver, _onDragStart, _onDragEnd, _onDragEnter, _onDragLeave, item }) => {
-  console.log('item', item);
   let classNames = "";
   dragData.move_up.includes(index) && dragData.columnIndex === columnIndex && (classNames = styles.move_up);
   dragData.move_down.includes(index) && dragData.columnIndex === columnIndex && (classNames = styles.move_down);
