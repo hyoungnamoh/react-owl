@@ -118,6 +118,7 @@ interface GetPagingItemStyleProps {
 interface KanbanBoardDummyDataItem {
   belongTo: string,
   index: number,
+  title: string,
   content: string,
   id: string,
 }
@@ -141,11 +142,12 @@ interface IssueProps {
   _onDragEnd: DragEventHandler<T>,
   _onDragEnter: DragEventHandler<T>,
   _onDragLeave: DragEventHandler<T>,
+  onClick: (issue?: KanbanBoardDummyDataItem | null) => void,
   item: KanbanBoardDummyDataItem,
 }
 
 interface IssueModalProps {
-  id: number,
+  issue: KanbanBoardDummyDataItem | null,
   column?: string,
   visible: boolean,
   onClickModalClose: () => void,

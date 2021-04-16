@@ -1,7 +1,19 @@
 import { FC } from "react";
 import styles from '../styles/KanbanBoard.module.scss';
 
-const Issue: FC<IssueProps> = ({ dragData, columnIndex, index, isDragged, _onDragOver, _onDragStart, _onDragEnd, _onDragEnter, _onDragLeave, item }) => {
+const Issue: FC<IssueProps> = ({
+  onClick,
+  dragData,
+  columnIndex,
+  index,
+  isDragged,
+  _onDragOver,
+  _onDragStart,
+  _onDragEnd,
+  _onDragEnter,
+  _onDragLeave,
+  item,
+}) => {
   let classNames = "";
   dragData.move_up.includes(index) && dragData.columnIndex === columnIndex && (classNames = styles.move_up);
   dragData.move_down.includes(index) && dragData.columnIndex === columnIndex && (classNames = styles.move_down);
@@ -17,9 +29,10 @@ const Issue: FC<IssueProps> = ({ dragData, columnIndex, index, isDragged, _onDra
       onDragEnd={_onDragEnd}
       onDragEnter={_onDragEnter}
       onDragLeave={_onDragLeave}
+      onClick={() => onClick(item)}
     >
       <div className={styles.unselected} style={{ minHeight: 75 }}>
-        {item.content}
+        {item.title}
       </div>
       <div className={styles.unselected} style={{ minHeight: 15, marginTop: 10 }}>
         {item.id}

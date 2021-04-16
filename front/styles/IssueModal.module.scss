@@ -1,4 +1,4 @@
-.modal {
+.modalWrapper {
   position: fixed;
   top: 0;
   right: 0;
@@ -9,4 +9,102 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .modal {
+    width: 40%;
+    height: 60%;
+    background-color: white;
+    position: relative;
+    flex-direction: column;
+    padding: 20px;
+
+    .modalHeader {
+      display: flex;
+      justify-content: space-between;
+      flex: 1;
+    }
+
+    .modalContent {
+      display: flex;
+      flex-direction: column;
+      flex: 1.5;
+      overflow-y: auto;
+      max-height: 600px;
+      height: 100%;
+
+      .title {
+        font-weight: bold;
+        margin-top: 20px;
+        border: goldenrod 1px solid;
+        font-size: 23px;
+        height: auto;
+        padding: 3px 5px;
+      }
+
+      .descriptionTitle {
+        font-weight: bold;
+        font-size: 12px;
+        margin-top: 20px;
+      }
+      .editorWrapper {
+        margin-top: 20px;
+      }
+      .editorWrapper:hover {
+        background-color: #091e420f;
+      }
+      .editor {
+        overflow-y: hidden;
+        min-height: 200px;
+      }
+      .editorToolbar {
+      }
+      .editButtonContainer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+
+        .saveButton {
+          color: #fff;
+          background-color: #326295;
+          border: 1px double #326295;
+          font-weight: bold;
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          padding: 0.275rem 0.75rem;
+          font-size: 0.875rem;
+          line-height: 1.5;
+          border-radius: 2px;
+          transition: 0.3s;
+          outline: none;
+          margin-right: 10px;
+        }
+        .cancelButton {
+          color: #326295;
+          background-color: #fff;
+          border: 1px double #326295;
+          font-weight: bold;
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          padding: 0.275rem 0.75rem;
+          font-size: 0.875rem;
+          line-height: 1.5;
+          border-radius: 2px;
+          transition: 0.3s;
+          outline: none;
+        }
+        .cancelButton,
+        .saveButton:not(:disabled):not(.disabled) {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .modalFooter {
+      .createdAt {
+        margin-top: 20px;
+      }
+    }
+  }
 }

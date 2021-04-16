@@ -18,7 +18,7 @@ const KanbanBoard = () => {
   });
   const [isDragged, setIsDragged] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [issueId, setIssueId] = useState<number>(0)
+  const [selectedIssue, setSelectedIssue] = useState<KanbanBoardDummyDataItem | null>(null)
 
   useEffect(() => {
 
@@ -129,7 +129,21 @@ const KanbanBoard = () => {
                     style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden' }} >
                     {
                       column.map((item, index) => {
-                        return <Issue dragData={dragData} columnIndex={columnIndex} index={index} isDragged={isDragged} _onDragOver={_onDragOver} _onDragStart={_onDragStart} _onDragEnd={_onDragEnd} _onDragEnter={_onDragEnter} _onDragLeave={_onDragLeave} item={item} />;
+                        return (
+                          <Issue
+                            onClick={onClickModalOpen}
+                            dragData={dragData}
+                            columnIndex={columnIndex}
+                            index={index}
+                            isDragged={isDragged}
+                            _onDragOver={_onDragOver}
+                            _onDragStart={_onDragStart}
+                            _onDragEnd={_onDragEnd}
+                            _onDragEnter={_onDragEnter}
+                            _onDragLeave={_onDragLeave}
+                            item={item}
+                          />
+                        );
                       })
                     }
                     <div className={styles.createIssueButton}>
@@ -145,17 +159,24 @@ const KanbanBoard = () => {
     )
   }
 
-  const onClickOpen = () => {
+  const onClickModalOpen = (issue?: KanbanBoardDummyDataItem | null) => {
+    if (issue) {
+      setSelectedIssue(issue);
+    }
     setModalVisible(true);
   }
 
   const onClickModalClose = () => {
+    setSelectedIssue(null);
     setModalVisible(false);
   }
 
   return (
     <>
-      <IssueModal id={issueId} visible={modalVisible} onClickModalClose={onClickModalClose} />
+      {
+        modalVisible &&
+        <IssueModal issue={selectedIssue} visible={modalVisible} onClickModalClose={onClickModalClose} />
+      }
       <div className={styles.header}>
         <div className={styles.selectViewTypeButtonContainer}>
           <div className={styles.selectViewTypeButtonWrapper} style={{ marginRight: 20 }} >
@@ -167,7 +188,7 @@ const KanbanBoard = () => {
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
           <div style={{ display: 'flex' }}>
-            <div className={styles.headerButton} onClick={onClickOpen}>
+            <div className={styles.headerButton} onClick={() => onClickModalOpen()}>
               Open
             </div>
             <div className={styles.headerButton}>
